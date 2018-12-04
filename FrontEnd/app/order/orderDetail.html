@@ -1,0 +1,1468 @@
+
+              <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+          <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+      <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+
+
+    // Initialize
+
+
+        var validatorInvoice = $(".form-validate-jquery-invoice").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                lebar:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+        var validatorPengiriman = $(".form-validate-jquery-kirim").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                lebar:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+	<div class="sidebar sidebar-secondary sidebar-default sidebar-fixed " ui-view='orderSide'>
+
+	</div>
+
+
+			<!-- Main content -->
+			<div class="content-wrapper" >
+
+                <div id="invoice">
+                                        <div class="col-md-12" ng-if="invState==true">
+                                            <!-- Invoice template -->
+                                            <div class="panel panel-white">
+
+                                                <div class="panel-body no-padding-bottom head-oke">
+                                                    <div class="row">
+                                                        <div class="col-md-6 content-group">
+                                                            <img src="../app/template/assets/images/logo.png" class="content-group mt-10 im" alt="" style="width: 120px;">
+
+                                                            <ul class="list-condensed list-unstyled">
+                                                              <li>{{setting.nama_perusahaan}}</li>
+                                                              <li>{{setting.alamat}}</li>
+                                                              <li>{{setting.no_telp1}}</li>
+                                                              <li>{{setting.no_telp2}}</li>
+                                                              <li>{{setting.email}}</li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="col-sm-6 content-group">
+                                                            <div class="invoice-details">
+                                                                <h5 class="text-uppercase text-semibold"><b>Invoice {{invoice.invoiceNumber}}</b></h5>
+                                                                <ul class="list-condensed list-unstyled">
+                                                                    <li>Tanggal Invoice: <span class="text-semibold">{{invoice.invoiceDate}}</span></li>
+                                                                    <li>Batas Waktu: <span class="text-semibold">{{invoice.invoiceDueDate}}</span></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-9 content-group">
+                                                            <span class="text-muted">Kepada</span>
+                                                            <ul class="list-condensed list-unstyled">
+                                                                <li><h6><b>{{invoice.customerName | uppercase}}</b></h6></li>
+                                                                <li><span class="text-semibold">{{invoice.company|uppercase}}</span></li>
+                                                                <li>{{invoice.address}}</li>
+                                                                <li>{{invoice.phone}}</li>
+                                                                <li><a>{{invoice.email}}</a></li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="col-sm-6 col-lg-3 content-group">
+                                                            <span class="text-muted">Payment Details:</span>
+                                                            <ul class="list-condensed list-unstyled invoice-payment-details">
+                                                                <li>{{setting.payment_detail}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="table-responsive table-oke">
+                                                    <table class="table table-bordered" >
+                                                        <thead>
+                                                            <tr class="bg-grey-300">
+                                                                <th >SKU</th>
+                                                                <th class="col-sm-8">Produk</th>
+                                                                <th class="col-sm-1">QTY</th>
+                                                                <th class="col-sm-1">Harga</th>
+                                                                <th class="col-sm-1">Diskon (%)</th>
+                                                                <th class="col-sm-1">Sub Total</th>
+                            
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat="item in orderItem">
+                                                            <td>
+                                                                <b>{{item.sku | uppercase}}</b>                                                                 
+                                                            </td>
+                                                            <td style="width:60%"><b>{{item.namaProduk | uppercase}}</b>
+                                                            </td>
+                                                            <td>{{item.itemQty}}</td>
+                                                            <td>{{item.harga | currency:'':0| comma2decimal}}</td>
+                                                            <td ng-if="item.itemDiscount==null">0</td>
+                                                            <td ng-if="item.itemDiscount!=null">{{item.itemDiscount}}</td>
+                                                            <td >{{item.itemTotal | currency:'':0| comma2decimal}}</td>                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            
+                                                        </tr>
+
+
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5">Total :</td>
+                                                                <td><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="6">Terbilang : {{terbilang(getTotalOrderItem('n')) | uppercase}}</td>
+                                                                
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+
+                                                <div class="panel-body foot-oke">
+                                                    <div class="row invoice-payment">
+                                                        <div class="col-md-7">
+                                                            <div class="content-group">
+                                                                <h6><b>Autorisasi Oleh</b></h6>
+                                                                <br/><br/>
+
+                                                                <ul class="list-condensed list-unstyled text-muted">
+                                                                    <li>{{invoice.orderAuthorized|uppercase}}</li>
+                                                    
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-5">
+                                                            <div class="content-group">
+                                                                
+                                                                <h6><b>Informasi Lainnya</b></h6>
+                                                                <p class="text-muted">{{invoice.invoiceNote}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                    
+                                                </div>
+                                            </div>
+                                            <!-- /invoice template -->
+
+                                        </div>
+                </div>
+
+		        <!-- Page header -->
+		        <div class="page-header page-header-default">
+		          <div class="page-header-content">
+		            <div class="page-title">
+		              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Order (Detail Order)</span> </h4>
+		            </div>
+		          </div>
+
+		          <div class="breadcrumb-line">
+		            <ul class="breadcrumb">
+		              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+		              <li><a ui-sref="order()">Order</a></li>
+		              <li class="active">Detail</li>
+		            </ul>
+		          </div>
+		        </div>
+		        <!-- /page header -->
+				<!-- Content area -->
+				<!-- Content area -->
+				<div class="content">
+						<div class="panel panel-default">
+								<div class="panel-heading">
+									<h6 class="panel-title">Informasi Order <span class="label bg-info"><b>#{{order.orderNumber}}</b> </span> / {{order.customerName }}/<span  class="label bg-info"><b>{{order.orderStatus | uppercase}}</b></span></h6>
+									<div class="heading-elements">
+										<div class="btn-group heading-btn">
+				                            <button ng-show="!konfirmasi" class="btn btn-info btn-xs " ng-click="konfirmasiButton('Confirmed',order.messengerID,order.orderNumber)">Konfirmasi Order</button>
+                                          
+				                      
+                                            
+
+				                            <button class="btn btn-warning btn-xs " ng-click="editButton()">Edit</button>
+				                        <!--     <button class="btn btn-danger btn-xs ">Delete</button> -->
+				                       
+				                           
+<!--      										<button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-printer position-left"></i> Print <span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li><a href="#">Order</a></li>
+												<li><a href="#">Label Pengiriman</a></li>
+												<li><a ng-if="invoice" ng-click="print()" >Invoice</a></li>
+												
+											</ul> -->
+
+											<ul class="icons-list">
+						                		<li class="dropdown">
+						                			<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-envelope position-left"></i> <span class="caret"></span></a>
+													<ul class="dropdown-menu dropdown-menu-right">
+													
+														<li><a ng-click="sendInvoice('email',order.orderID,order.email)">Send Invoice to (Email)</a></li>
+														<li><a ng-click="sendInvoice('messenger',order.orderID,order.messengerID)"  ng-if="order.messengerID!=''">Send Invoice to (Messenger)</a></li>
+														
+													</ul>
+						                		</li>
+						                	</ul>
+				                        </div>
+			                        </div>
+								</div>
+								
+								<div class="panel-body">
+									<div class="product_desc">
+										<div class="col-md-7">
+											
+													<ul >
+														<li>
+															<div class="media-left">Nama Pelanggan</div>
+															<b class="media-right">: {{order.customerName | uppercase}}</b>
+														</li>
+														<li>
+															<div class="media-left">Email</div>
+															<b class="media-right">: {{order.email | uppercase}}</b>
+														</li>
+														<li>
+															<div class="media-left">Phone</div>
+															<b class="media-right">: {{order.phone}}</b>
+														</li>
+														<li>
+															<div class="media-left">Perusahaan</div>
+															<b class="media-right">: {{order.company}}</b>
+														</li>
+														<li>
+															<div class="media-left">Alamat</div>
+															<b class="media-right">: {{order.address | uppercase}}</b>
+														</li>
+
+
+				
+
+													</ul>
+											
+										</div>
+										<div class="col-md-5">
+											<p><b>Nomor Order :</b> <span class="label bg-info">#{{order.orderNumber}} </span></p>
+											<p><b>Tanggal Order : </b>{{order.orderDate}}</p>
+											<p><b>Alamat Pengiriman :</b></p>
+											<p>{{order.orderDeliveryAddress | uppercase}}</p>
+											<p><b>Autorisasi Oleh :</b>{{order.orderAuthorized | uppercase}}</p>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+					<!-- Task manager table -->
+					<div class="panel panel-white">
+						<div class="panel-body">
+							<div class="tabbable">
+								<ul class="nav nav-tabs nav-tabs-bottom" ng-hide="konfirmasi">
+									
+									<li class="active" ><a data-toggle="tab" href="#right-icon-tab1"><b>Konfirmasi</b></a></li>
+									
+							
+
+								</ul>
+								<ul class="nav nav-tabs nav-tabs-bottom" ng-show="konfirmasi">
+				
+									
+									
+									<li class="active" ><a data-toggle="tab" href="#right-icon-tab2" ><b>Pengiriman</b></a></li>
+									<li ><a data-toggle="tab" href="#right-icon-tab3" ><b>Invoice</b></a></li>
+									<li ><a data-toggle="tab" href="#right-icon-tab4" ><b>Overview</b></a></li>
+									
+				
+
+								</ul>
+
+								<div class="tab-content">
+									<div id="right-icon-tab1" class="tab-pane " ng-hide="konfirmasi" ng-class="konfirmasi==false?'active':''">
+										<div class="col-md-12">
+											<div class="alert alert-info alert-styled-left alert-bordered">
+												<span class="text-semibold">Untuk memproses order, kamu harus terlebih dahulu mengkonfirmasi order ini</span> Dengan menekan tombol "Konfirmasi Order" yang berada diatas, selanjutnya kamu dapat membuat status pengiriman dan invoice.
+										    </div>
+											<div class="table-responsive">
+												<table class="table table-bordered table-lg">
+													<thead>
+														<tr class="bg-info">
+															<th>Image</th>
+															<th>Produk</th>
+															<th>QTY</th>
+															<th>Harga (Rp)</th>
+															<th>Diskon (%)</th>
+															<th>Subtotal</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in orderItem">
+															<td>
+															
+									                                <img ng-if="item.extra=='N'" src="{{url+'/uploads/produk/'+item.image}}" style="height:50px; width:auto">
+                                                                    <img ng-if="item.extra=='Y'" src="{{url+'/uploads/produk/placeholder.jpg'}}" style="height:50px; width:auto">
+									                    
+															</td>
+															<td>{{item.namaProduk | uppercase}}</td>
+															<td>{{item.itemQty}}</td>
+															<td>{{item.harga}}</td>
+															<td>{{item.itemDiscount}}</td>
+															<td >{{item.itemTotal| currency:'':0 | comma2decimal}}</td>														
+														</tr>
+														
+													</tbody>
+													<tfoot>
+														<tr>
+
+															<th colspan="5">Total :</th>
+															<th ><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></th>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+										</div>
+
+									</div>
+
+
+									<div id="right-icon-tab2" class="tab-pane" ng-show="konfirmasi" ng-class="konfirmasi==true?'active':''">
+										<div class="col-md-12">
+											<div class="alert alert-info alert-styled-left alert-bordered" ng-if="order.orderStatus!='Shipping'">
+												<span class="text-semibold">Kamu dapat mengubah order ini ke proses pengiriman, dengan mengisi form yang tersedia dibawah ini. Data-data yang kamu isi akan otomatis masuk ke dalam item yang dipesan. </span>
+										    </div>
+
+										    <div ng-show="order.orderStatus=='Confirmed'">
+
+						                        <form class="form-horizontal form-validate-jquery-kirim" id="formPengiriman" ng-submit="submitPengiriman(order.orderID,order.messengerID,order.orderNumber)">
+						                          <div class="col-md-6">
+						                            <fieldset class="content-group">
+						                              
+						              
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Tanggal Pengiriman<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="date" placeholder="" ng-model="tgl" class="form-control">
+						            
+						                                </div>
+						                              </div>
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Dikirim Via<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="text" placeholder="" ng-model="pengiriman.kurir" name="via" required="required" class="form-control">
+						            
+						                                </div>
+						                              </div>
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Berat Total <span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="text" placeholder="" ng-model="pengiriman.berat" name="number"  required="required" class="form-control">
+						            
+						                                </div>
+						                              </div>
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Harga/kg<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="text" placeholder="" ng-model="pengiriman.harga_pengiriman"  name="harga" required="required" class="form-control">
+						            
+						                                </div>
+						                              </div>
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Tracking Kode</label>
+						                                <div class="col-lg-8">
+						                                  <input type="text" placeholder="" ng-model="pengiriman.tracking_kode"   class="form-control">
+						            
+						                                </div>
+						                              </div>
+
+
+						                            </fieldset>
+
+						                         </div>
+													<div class="col-md-12">
+														<div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+															<div class="heading-elements">
+																
+																<div class="heading-btn pull-right">
+																	<button type="submit" class="btn btn-info">Simpan Dan Cetak Label Pengiriman</button>
+																	<button type="button" class="btn btn-default">Cancel</button>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+						                        </form>
+					                        </div>
+
+										</div>
+										<div class="col-md-12">
+											<div class="table-responsive" ng-if="order.orderStatus=='Shipping' || order.orderStatus=='Done'">
+												<table class="table table-bordered table-lg">
+													<thead>
+														<tr class="bg-info">
+															<th>Shipment ID</th>
+															<th>Tanggal Pengiriman</th>
+															<th>Via</th>
+															<th>Berat</th>
+															<th>Harga Pengiriman</th>
+															<th>Tracking Kode</th>
+															<th>Total Biaya</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="ship in shipment">
+
+															<td>{{ship.id | uppercase}}</td>
+															<td>{{ship.tanggal_pengiriman}}</td>
+															<td>{{ship.kurir}}</td>
+															<td>{{ship.berat}}</td>
+															<td>{{ship.harga_pengiriman}}</td>
+															<td>{{ship.tracking_kode}}</td>
+															<td>{{ship.berat * ship.harga_pengiriman  | currency:'': 0 | comma2decimal}}</td>
+															
+														</tr>
+														
+													</tbody>
+												</table>
+											</div>
+											<div class="table-responsive" ng-if="order.orderStatus!='Shipping' && order.orderStatus!='Done'">
+												<table class="table table-bordered table-lg">
+													<thead>
+														<tr class="bg-info">
+															<th>Image</th>
+															<th>Produk</th>
+															<th>QTY</th>
+															<th>Harga (Rp)</th>
+															<th>Diskon (%)</th>
+															<th>Subtotal</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in orderItem">
+															<td>
+															
+                                                                    <img ng-if="item.extra=='N'" src="{{url+'/uploads/produk/'+item.image}}" style="height:50px; width:auto">
+                                                                    <img ng-if="item.extra=='Y'" src="{{url+'/uploads/produk/placeholder.jpg'}}" style="height:50px; width:auto">
+									                    
+															</td>
+															<td>{{item.namaProduk | uppercase}}</td>
+															<td>{{item.itemQty}}</td>
+															<td>{{item.harga}}</td>
+															<td>{{item.itemDiscount}}</td>
+															<td >{{item.itemTotal}}</td>														
+														</tr>
+														
+													</tbody>
+													<tfoot>
+														<tr>
+
+															<th colspan="5">Total :</th>
+															<th ><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></th>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+										</div>
+
+									</div>
+
+									<div id="right-icon-tab3" class="tab-pane" ng-show="konfirmasi">
+										<div class="col-md-12">
+											<div class="alert alert-info alert-styled-left alert-bordered">
+												<span class="text-semibold">Pada bagian ini anda dapat membuat invoice untuk pelanggan  </span>
+										    </div>
+
+										    <div ng-hide="invState">
+						                        <form class="form-horizontal form-validate-jquery-invoice" id="formInvoice" ng-submit="submitInvoice(order.orderID)">
+						                          <div class="col-md-6">
+						                            <fieldset class="content-group">
+						                              
+						              
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Tanggal Invoice<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="date" placeholder="" ng-model="invoiceDate"  required="required" class="form-control">
+						            
+						                                </div>
+						                              </div>
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Tanggal Habis Invoice<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <input type="date" placeholder="" ng-model="dueDate"  required="required" class="form-control">
+						            
+						                                </div>
+						                              </div>
+
+						                              <div class="form-group">
+						                                <label class="control-label col-lg-4">Note<span class="text-danger">*</span></label>
+						                                <div class="col-lg-8">
+						                                  <textarea type="text" placeholder="" ng-model="invo.invoiceNote"  required="required" class="form-control"></textarea>
+						            
+						                                </div>
+						                              </div>
+
+
+						                            </fieldset>
+
+						                         </div>
+													<div class="col-md-12">
+														<div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+															<div class="heading-elements">
+																
+																<div class="heading-btn pull-right">
+																	<button type="submit" class="btn btn-info">Simpan Invoice </button>
+																	<button type="button" class="btn btn-default">Cancel</button>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+						                        </form>
+					                        </div>
+
+
+										</div>
+					                        <div class="col-md-12" ng-if="invState==false">
+												<div class="table-responsive">
+													<table class="table table-bordered table-lg">
+														<thead>
+															<tr class="bg-info">
+																<th></th>
+																<th>Image</th>
+																<th>Produk</th>
+																<th>QTY</th>
+																<th>Harga (Rp)</th>
+																<th>Diskon (%)</th>
+																<th>Subtotal</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="item in orderItem">
+																<th></th>
+																<td>
+																
+                                                                    <img ng-if="item.extra=='N'" src="{{url+'/uploads/produk/'+item.image}}" style="height:50px; width:auto">
+                                                                    <img ng-if="item.extra=='Y'" src="{{url+'/uploads/produk/placeholder.jpg'}}" style="height:50px; width:auto">
+										                    
+																</td>
+																<td>{{item.namaProduk | uppercase}}
+																	<p><b>SKU:</b> {{item.sku | uppercase}}</p>
+																</td>
+																<td>{{item.itemQty}}</td>
+																<td>{{item.harga}}</td>
+																<td>{{item.itemDiscount}}</td>
+																<td >{{item.itemTotal}}</td>														
+															</tr>
+															
+														</tbody>
+														<tfoot>
+															<tr>
+
+																<th colspan="6">Total :</th>
+																<th ><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										<div class="col-md-12" ng-if="invState==true">
+											<!-- Invoice template -->
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h6 class="panel-title">Invoice</h6>
+													<div class="heading-elements">
+														
+														<button type="button" ng-click="print()" class="btn btn-default btn-xs heading-btn"><i class="icon-printer position-left"></i> Print</button>
+								                	</div>
+												</div>
+
+												<div class="panel-body no-padding-bottom">
+													<div class="row">
+														<div class="col-sm-6 content-group">
+															<img src="../app/template/assets/images/logo.png" class="content-group mt-10" alt="" style="width: 120px;">
+                                                            <ul class="list-condensed list-unstyled">
+                                                                  <li>{{setting.nama_perusahaan}}</li>
+                                                                  <li>{{setting.alamat}}</li>
+                                                                  <li>{{setting.no_telp1}}</li>
+                                                                  <li>{{setting.no_telp2}}</li>
+                                                                  <li>{{setting.email}}</li>
+                                                            </ul>
+														</div>
+
+														<div class="col-sm-6 content-group">
+															<div class="invoice-details">
+																<h5 class="text-uppercase text-semibold"><b>Invoice {{invoice.invoiceNumber}}</b></h5>
+																<ul class="list-condensed list-unstyled">
+																	<li>Tanggal Invoice: <span class="text-semibold">{{invoice.invoiceDate}}</span></li>
+																	<li>Batas Waktu: <span class="text-semibold">{{invoice.invoiceDueDate}}</span></li>
+																</ul>
+															</div>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-md-6 col-lg-9 content-group">
+															<span class="text-muted">Kepada</span>
+								 							<ul class="list-condensed list-unstyled">
+																<li><h5>{{invoice.customerName | uppercase}}</h5></li>
+																<li><span class="text-semibold">{{invoice.company|uppercase}}</span></li>
+																<li>{{invoice.address}}</li>
+																<li>{{invoice.phone}}</li>
+																<li><a>{{invoice.email}}</a></li>
+															</ul>
+														</div>
+
+														<div class="col-md-6 col-lg-3 content-group">
+															<span class="text-muted">Payment Details:</span>
+															<ul class="list-condensed list-unstyled invoice-payment-details">
+                                                                <li>{{setting.payment_detail}}</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+
+												<div class="table-responsive">
+												    <table class="table table-bordered">
+												        <thead>
+												            <tr class="bg-grey-300">
+												                <th >SKU</th>
+												                <th>Produk</th>
+												                <th class="col-sm-1">QTY</th>
+												                <th class="col-sm-1">Harga</th>
+												                <th class="col-sm-1">Diskon (%)</th>
+												                <th class="col-sm-1">Sub Total</th>
+							
+												            </tr>
+												        </thead>
+												        <tbody>
+														<tr ng-repeat="item in orderItem">
+											                <td>
+											                	<b>{{item.sku | uppercase}}</b>												                	
+										                	</td>
+															<td><b>{{item.namaProduk | uppercase}}</b>
+															</td>
+															<td>{{item.itemQty}}</td>
+															<td>{{item.harga | currency:'':0 | comma2decimal}}</td>
+															<td ng-if="item.itemDiscount==null">0</td>
+															<td ng-if="item.itemDiscount!=null">{{item.itemDiscount}}</td>
+															<td >{{item.itemTotal | currency:'':0 | comma2decimal}}</td>														
+														</tr>
+														<tr>
+															
+														</tr>
+
+
+
+												        </tbody>
+												        <tfoot>
+												        	<tr>
+												        		<td colspan="5">Total :</td>
+												        		<td><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></td>
+												        	</tr>
+												        </tfoot>
+												    </table>
+												</div>
+
+												<div class="panel-body">
+													<div class="row invoice-payment">
+														<div class="col-sm-7">
+															<div class="content-group">
+																<h6><b>Autorisasi Oleh</b></h6>
+																<br/><br/>
+
+																<ul class="list-condensed list-unstyled text-muted">
+																	<li>{{invoice.orderAuthorized|uppercase}}</li>
+													
+																</ul>
+															</div>
+														</div>
+
+														<div class="col-sm-5">
+															<div class="content-group">
+																
+																<h6><b>Informasi Lainnya</b></h6>
+																<p class="text-muted">{{invoice.invoiceNote}}</p>
+															</div>
+														</div>
+													</div>
+
+					
+												</div>
+											</div>
+											<!-- /invoice template -->
+
+										</div>
+
+									</div>
+									<div id="right-icon-tab4" class="tab-pane" ng-show="konfirmasi">
+										<div class="col-md-12">
+<!-- 											<div class="alert alert-info alert-styled-left alert-bordered">
+												<span class="text-semibold">Untuk memproses order, kamu harus terlebih dahulu mengkonfirmasi order ini</span> Dengan menekan tombol "Konfirmasi Order" yang berada diatas, selanjutnya kamu dapat membuat status pengiriman dan invoice.
+										    </div> -->
+											<div class="table-responsive">
+												<table class="table table-bordered table-lg">
+													<thead>
+														<tr class="bg-info">
+															<th>Image</th>
+															<th>Produk</th>
+															<th>QTY</th>
+															<th>Harga (Rp)</th>
+															<th>Diskon (%)</th>
+															<th>Subtotal</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in orderItem">
+															<td>
+															
+                                                                   <img ng-if="item.extra=='N'" src="{{url+'/uploads/produk/'+item.image}}" style="height:50px; width:auto">
+                                                                    <img ng-if="item.extra=='Y'" src="{{url+'/uploads/produk/placeholder.jpg'}}" style="height:50px; width:auto">
+									                    
+															</td>
+															<td>{{item.namaProduk | uppercase}}</td>
+															<td>{{item.itemQty}}</td>
+															<td>{{item.harga}}</td>
+															<td>{{item.itemDiscount}}</td>
+															<td >{{item.itemTotal}}</td>														
+														</tr>
+														
+													</tbody>
+													<tfoot>
+														<tr>
+
+															<th colspan="5">Total :</th>
+															<th ><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></th>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- Footer -->
+<!-- 					<div class="footer text-muted">
+						&copy; 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+					</div> -->
+					<!-- /footer -->
+
+				</div>
+
+
+				<!-- /content area -->
+				<!-- /content area -->
+
+		      <!-- Modal Area -->
+
+		            <!-- Primary modal -->
+		            <div id="modal_theme_primary" class="modal fade" data-backdrop="false"  >
+		                  <div id="mo" class="proceeds-modal"  ng-if="showCase" >
+
+		                          <!-- Primary modal -->
+		                    <div id="modal_theme_primary" >
+
+		                      <div class="modal-dialog modal-lg">
+		                        <div class="modal-content">
+		                          <div class="modal-header bg-primary">
+		                            <button type="button" class="close" ng-click="close()">&times;</button>
+		                            <h6 class="modal-title">Pilih Data Customer</h6>
+
+		                          </div>
+
+		                          <div class="modal-body s">
+		                            <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+
+		                              <div class="navbar-collapse collapse" id="navbar-filter">
+		                                <!-- <p class="navbar-text">Filter:</p> -->
+		                                <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px; width:50%">
+		                                  <div class="input-group">
+		                                   <input type="text" class="form-control" placeholder="Filter By Keyword..." ng-model="seas" ng-change="searchess(seas)">
+		                                   
+		                                    <div class="input-group-btn">
+		                                      <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+		                                                    <ul class="dropdown-menu dropdown-menu-right">
+		                                        <li><a ng-click="keywordSearch('customerName')">Nama Customer </a></li>
+		                                        <li><a ng-click="keywordSearch('company')">Nama Perusahaan</a></li>
+		                                      
+		                                      </ul>
+		                                    </div>
+		                                  </div>
+		                                </div>
+
+		                                <div class="navbar-right">
+		                          
+		                                  <ul class="nav navbar-nav">
+		                                    <li class="{{asc}}"><a ng-click="sortClicks('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+		                                    <li class="{{desc}}"><a ng-click="sortClicks('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+		                                  </ul>
+		                                  <div class="nav navbar-nav" style="margin-top:3px;">
+		                                    <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+		                                     </select>
+		                                  </div>
+
+		                                  
+		                                </div>
+		                              </div>
+		                            </div>
+		                            <table class="table datatable-header-offset custom table-responsive">
+		                              <thead>
+		                                <tr>
+
+		                                  <th>Nama Customer</th>
+		                                  <th>Perusahaan</th>
+		                                  <th>Tanggal Bergabung</th>
+
+		                                  <th>Aksi</th>
+		    
+		                                
+
+
+		                                </tr>
+		                              </thead>
+		                              <tbody ng-if="data.total_count<1">
+		                                <tr >
+		                                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+		                                </tr>
+		                              </tbody>
+		                              <tbody dir-paginate="cust in customer|itemsPerPage:data.itemsPerPage" total-items="data.total_count">
+
+		                             
+		                                  <tr>
+
+		                                    <td>{{cust.customerName}}</td>
+		                                    <td>{{cust.company}}</td>
+		                                    <td>{{cust.joinDate}}</td>
+		                                  
+
+		                                    <td>
+		                                      <button class="btn btn-default btn-xs" ng-click="pilihCustomer($index,cust.customerName,cust.customerID,cust.address)">Pilih</button>
+
+		                                    </td>
+
+
+		                                  </tr>
+		                              </tbody>
+		                            </table>
+		                             <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getCustomer(newPageNumber)"></dir-pagination-controls></div>
+		                          </div>
+
+		                          <div class="modal-footer">
+		                            <button type="button" class="btn btn-link"  ng-click="close()" >Close</button>
+		                        
+		                          </div>
+		                        </div>
+		                      </div>
+		                    </div>
+		                    <!-- /primary modal -->
+		                  </div>
+		                  <div id="mo" class="proceeds-modal"  ng-if="showCaseProduct" >
+
+		                          <!-- Primary modal -->
+		                    <div id="modal_theme_primary" >
+
+		                      <div class="modal-dialog modal-lg">
+		                        <div class="modal-content">
+		                          <div class="modal-header bg-primary">
+		                            <button type="button" class="close" ng-click="closeProduct()">&times;</button>
+		                            <h6 class="modal-title">Pilih Data Customer</h6>
+
+		                          </div>
+
+		                          <div class="modal-body s">
+		                          <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+		                            <ul class="nav navbar-nav no-border visible-xs-block">
+		                              <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+		                            </ul>
+
+		                            <div class="navbar-collapse collapse" id="navbar-filter">
+		                              <!-- <p class="navbar-text">Filter:</p> -->
+		                              <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px; width:50%">
+		                                <div class="input-group">
+		                                  <input type="text" class="form-control" placeholder="Filter By Keyword..." ng-model="search" ng-change="searchessProduct(search)">
+		                                  <div class="input-group-btn">
+		                                    <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+		                                                  <ul class="dropdown-menu dropdown-menu-right">
+		                                      <li><a ng-click="keywordSearchProduct('sku')">SKU</a></li>
+		                                      <li><a ng-click="keywordSearchProduct('nama')">Nama Produk</a></li>
+		                                    
+		                                    </ul>
+		                                  </div>
+		                                </div>
+		                              </div>
+
+		                              <div class="navbar-right">
+		                        
+		                                <ul class="nav navbar-nav">
+		                                  <li class="{{asc}}"><a ng-click="sortClicksProduct('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+		                                  <li class="{{desc}}"><a ng-click="sortClicksProduct('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+		                                </ul>
+		                                <div class="nav navbar-nav" style="margin-top:3px;">
+		                                  <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="relsProduct()">
+		                                   </select>
+		                                </div>
+
+		                                
+		                              </div>
+		                            </div>
+		                          </div>
+
+		                          <table class="table datatable-header-offset custom ">
+		                            <thead>
+		                              <tr>
+
+		                                <th>Produk SKU</th>
+		                                <th>Nama Produk</th>
+		                                <th>Stok Tersedia</th>
+		                                <th>Harga</th>
+		                                <th>Image</th>
+		                                <th>Aksi</th>
+		                              
+
+
+		                              </tr>
+		                            </thead>
+		                            <tbody>
+		                              <tr ng-if="data.total_counts<1">
+		                                <td colspan="7"><b>Tidak Ada Data</b></td> 
+		                              </tr>
+		                              <tr dir-paginate="products in product|itemsPerPage:data.itemsPerPage" total-items="data.total_count">
+		                                <td>{{products.sku}}</td>
+		                                <td>{{products.nama}}</td>
+		                                <td ng-if="products.readystock=='Y' && products.leftInHand !=products.stok">{{products.stok-products.leftInHand}}</td>
+		                                <td ng-if="products.readystock=='N'"><span class="label label-success">Pre Order</span></td>
+		                                <td ng-if="products.readystock=='Y' && products.leftInHand ==products.stok"><span class="label label-warning">Stok Habis</span></td>
+		                                <td>{{products.harga}}</td>
+		                                <td>{{}}</td>
+		                                <td class="text-center" >
+		                                <button class="btn btn-default btn-xs" ng-if="products.readystock=='Y' && products.leftInHand !=products.stok" ng-click="pilihProduct(products.nama,products.productID,products.harga,products.stok,products.readystock)">Pilih</button>
+		                                <button class="btn btn-default btn-xs" ng-if="products.readystock=='N'" ng-click="pilihProduct(products.nama,products.productID,products.harga,products.stok,products.readystock)">Pilih</button>
+
+		                                                
+		                                </td>
+
+		                              </tr>
+
+		                            </tbody>
+		                          </table>
+		                          <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getProduct(newPageNumber)"></dir-pagination-controls></div>
+
+
+		                          </div>
+
+		                          <div class="modal-footer">
+		                            <button type="button" class="btn btn-link"  ng-click="close()" >Close</button>
+		                        
+		                          </div>
+		                        </div>
+		                      </div>
+		                    </div>
+		                    <!-- /primary modal -->
+		                  </div>
+		                  <div class="modal-dialog modal-full">
+		                    <div class="modal-content">
+		                      <div class="modal-header bg-primary">
+		                        <button type="button" class="close" ng-click="closeModal()">&times;</button>
+		                        <h6 class="modal-title">Edit Data Order</h6>
+		                      </div>
+		                      <div class="modal-body">
+		                        <form class="form-horizontal form-validate-jquery-edit" id="form" ng-submit="submit()">
+		                          <div class="col-md-6">
+		                            <fieldset class="content-group">
+		                              
+		                              <legend class="text-bold">Informasi Umum</legend>
+		                              <input type="hidden" ng-model="form.productID" value="form.productID">
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Tanggal Order<span class="text-danger">*</span></label>
+		                                <div class="col-lg-9">
+		                                  <input type="date" placeholder="" ng-model="orderDate"  required="required" class="form-control">
+		            
+		                                </div>
+		                              </div>
+		                              <div class="form-group">
+		                                  <label class="control-label col-lg-3">Customer <span class="text-danger">*</span></label>
+		                                  <div class="col-lg-9 ">
+		                                    <input type="hidden" ng-model="form.customerID" required="required">
+		                                    <div class="input-group">
+		                                      
+		                                      <input type="text" class="form-control" ng-model="namaCustomer" readonly="true" required="required" name="input_group">
+		                                     
+		                                      <div class="input-group-btn">
+		                                        <button type="button"  class="btn btn-default dropdown-toggle btn-icon" ng-click="showw()"aria-expanded="false"><i class="icon-menu7"></i></button>
+		                                                  
+		                                      </div>
+		                                    </div>
+		                                  
+		                                  </div>
+		                              </div>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Nama Order<span class="text-danger">*</span></label>
+		                                <div class="col-lg-9">
+		                                  <input type="text" ng-model="form.orderName" name="namas" class="form-control">
+		                                </div>
+		                              </div>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Deskripsi</label>
+		                                <div class="col-lg-9">
+		                                  <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.orderDesc"></textarea>
+		                                </div>
+		                              </div>
+
+
+
+
+
+		                            </fieldset>
+
+
+		                      
+
+
+		                          </div>
+
+
+                          <div class="col-md-12">
+                            <legend class="text-bold">Item Order</legend>
+                            <table class="table datatable-header-offset custom ">
+                              <thead>
+                                <tr>
+                                  <th style="width:350px;">Produk</th>
+                                  <th style="width:150px;">QTY</th>
+                                  
+                        
+                                  <th style="width:250px;">Harga / unit</th>
+                                  <th style="width:150px;">Diskon %</th>
+                                  <th style="width:250px;">Jumlah</th>
+      
+                 
+                                  <th></th>
+                                
+
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="order in form.item " >
+
+                                  <td>
+
+                                      <div class="input-group">
+                                        <input type="hidden" class="form-control" ng-model="order.productID"  name="harga">
+                                       <input type="text" class="form-control" ng-model="order.product"  >
+                                        <div class="input-group-btn">
+                                          <button type="button" class="btn btn-default dropdown-toggle btn-icon" ng-click="showwProduct($index)"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                    
+                                        </div>
+                                      </div>
+                                 </td>
+                                  <td><input type="text" ng-disabled="order.product==''" class="form-control" ng-model="order.itemQty" ng-change="cekStok(order.readystock,order.itemQty,order.stok,order.leftInHand,$index)" name="noItem{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-disabled="order.product==''" ng-model="order.itemUnitPrice"  name="noItemHarga{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-disabled="order.product==''" ng-model="order.itemDiscount"  name="noItemDiscount{{$index}}"></td>
+                                  <td>
+
+                                  <input type="text" class="form-control" readonly="true" placeholder="{{amount(order.itemQty,order.itemUnitPrice,order.itemDiscount,$index,'none')  | currency:'': 0 }}" ></td>
+                   
+
+                                  <td><a ng-click="addNewVariant('none',$index+1)" ng-if="$last"><i class="icon-add"></i></a> <a ng-hide="$first" ng-click="removeVariant($index)" ><i class="icon-trash"></i></a> </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="4"></td>
+                                  <td><input type="text" class="form-control" readonly="true" placeholder="{{getTotal('none') | currency:'':0}}" name="total"></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+
+                          </div>
+                          <div class="col-md-12">
+                            <legend class="text-bold">Extra Item</legend>
+                            <table class="table datatable-header-offset custom ">
+                              <thead>
+                                <tr>
+                                  <th style="width:350px;">Deskripsi</th>
+                                  <th style="width:150px;">QTY</th>
+                                  
+                        
+                                  <th style="width:250px;">Harga / unit</th>
+                                  <th style="width:150px;">Diskon %</th>
+                                  <th style="width:250px;">Jumlah</th>
+      
+                 
+                                  <th></th>
+                                
+
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="order in extra" >
+
+                                  <td>
+
+                                      
+                                        <input type="hidden" class="form-control" ng-model="order.productID"  name="harga">
+                                        <input type="text" class="form-control" ng-model="order.itemDesc"  name="extra{{$index}}" >
+                                      
+                                 </td>
+                                  <td><input type="text" class="form-control" ng-model="order.itemQty" name="noExtra{{$index}}"></td>
+                                  <td><input type="text" class="form-control"   ng-model="order.itemUnitPrice" name="noExtraHarga{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-model="order.itemDiscount" name="noExtraDiscount{{$index}}" ></td>
+                                  <td>
+
+                                  <input type="text" class="form-control" readonly="true" placeholder="{{amount(order.itemQty,order.itemUnitPrice,order.itemDiscount,$index,'extra')  | currency:'': 0 }}" ></td>
+                   
+
+                                  <td><a ng-click="addNewVariant('extra',$index+1)" ng-if="$last"><i class="icon-add"></i></a> <a ng-hide="$first" ng-click="removeVariantExtra($index)" ><i class="icon-trash"></i></a> </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="4"></td>
+                                  <td><input type="text" class="form-control" readonly="true" placeholder="{{getTotal('extra') | currency:'':0}}" name="total"></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+
+                          </div>
+		                         <div class="col-md-6" >
+
+		                            <fieldset class="content-group">
+		                              <legend class="text-bold"></legend>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Tanggal Order Selesai<span class="text-danger">*</span></label>
+		                                <div class="col-lg-9">
+		                                  <input type="date" placeholder="" ng-model="orderFinishDate"  required="required" class="form-control">
+		            
+		                                </div>
+		                              </div>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Alamat Penagihan</label>
+		                                <div class="col-lg-9">
+		                                  <textarea rows="5" cols="5" class="form-control" placeholder="" ng-model="form.orderDeliveryAddress"></textarea>
+		                                </div>
+		                              </div>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Instruksi Pembayaran</label>
+		                                <div class="col-lg-9">
+		                                  <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.orderDeliveryInstruction"></textarea>
+		                                </div>
+		                              </div>
+		                              <div class="form-group">
+		                                <label class="control-label col-lg-3">Autorisasi Oleh</label>
+		                                <div class="col-lg-9">
+		                                  <input type="text" ng-model="form.orderAuthorized" class="form-control" required="required">
+		                                </div>
+		                              </div>
+
+
+		                            </fieldset> 
+
+
+		                          </div>
+
+		                          <div class="col-md-12" style="text-align:right">
+		                            <button type="button" class="btn btn-link"  ng-click="closeModal()">Close</button>
+		                              <button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+		                          </div>
+		                        </form>
+		                      </div>
+
+		                      <div class="modal-footer">
+		       
+		                      </div>
+
+
+		                  </div>
+
+
+
+		            </div>
+
+
+
+		      <!-- Modal Area -->
+
+			</div>
+			<!-- /main content -->

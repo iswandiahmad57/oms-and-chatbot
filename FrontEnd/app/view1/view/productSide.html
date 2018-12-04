@@ -1,0 +1,90 @@
+		<div class="sidebar-content">
+
+			<!-- Sidebar search -->
+			<div class="sidebar-category">
+				<div class="category-title">
+<!-- 				<a class="btn border-blue text-blue btn-flat btn-rounded btn-icon btn-xs" href="#"><i class="icon-spinner9"></i></a>
+				<a class="btn border-pink text-pink btn-flat btn-rounded btn-icon btn-xs" href="#"><i class="icon-statistics"></i></a>
+				<a class="btn border-pink text-pink btn-flat btn-rounded btn-icon btn-xs" href="#"><i class="icon-statistics"></i></a> -->
+				</div>
+
+				<div class="category-content">
+					<form action="#">
+						<div class="has-feedback has-feedback-left">
+							<input type="search" placeholder="Search by Name" class="form-control" ng-model="src" ng-change="searches()">
+							<div class="form-control-feedback">
+								<i class="icon-search4 text-size-base text-muted"></i>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /sidebar search -->
+
+
+			<!-- Online users -->
+			<div class="sidebar-category ">
+
+
+				<div class="category-content">
+					<ul class="media-list">
+						<li ng-repeat="pro in product" >
+												
+						<div class="panel border-left-lg border-left-danger invoice-grid timeline-content" ng-class="productID==pro.productID?'active-product':''" style="margin-bottom:3px;" >
+							<div class="panel-body" style="padding:5px; ">
+							
+														
+								<a class="media-left" href="#"><img alt="" class="img-sm img-circle" src="{{url}}/uploads/produk/{{pro.image}}"></a>
+								<div class="media-body">
+									<a class="media-heading text-semibold" ng-click="clik(pro.productID)">{{pro.nama}}</a>
+									<span class="text-size-mini text-muted display-block">{{pro.sku}}</span>
+								</div>
+								<div class="media-right media-middle">
+									<span class="status-mark border-success"></span>
+								</div>
+
+							</div>
+						</div>
+<!-- 						<div class="panel border-left-lg border-left-danger invoice-grid timeline-content" style="margin-bottom:3px;">
+							<div class="panel-body" style="padding:5px; ">
+							
+														
+								<a class="media-left" href="#"><img alt="" class="img-sm img-circle" src="assets/images/placeholder.jpg"></a>
+								<div class="media-body">
+									<a class="media-heading text-semibold" href="#">James Alexander</a>
+									<span class="text-size-mini text-muted display-block">Santa Ana, CA.</span>
+								</div>
+								<div class="media-right media-middle">
+									<span class="status-mark border-success"></span>
+								</div>
+
+							</div>
+						</div>
+						<div class="panel border-left-lg border-left-success invoice-grid timeline-content active-product" style="margin-bottom:3px; ">
+							<div class="panel-body" style="padding:5px; ">
+							
+														
+								<a class="media-left" href="#"><img alt="" class="img-sm img-circle" src="assets/images/placeholder.jpg"></a>
+								<div class="media-body">
+									<a class="media-heading text-semibold" href="#">Paper Bag Custom</a>
+									<span class="text-size-mini text-muted display-block">PPBG-01-012</span>
+								</div>
+								<div class="media-right media-middle">
+									<span class="status-mark border-success"></span>
+								</div>
+
+							</div>
+						</div>
+								 -->			
+						</li>
+
+
+					</ul>
+				</div>
+			</div>
+			<!-- /online-users -->
+
+
+
+
+		</div>

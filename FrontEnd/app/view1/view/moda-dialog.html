@@ -1,0 +1,185 @@
+      <div class="modal-dialog modal-full">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h6 class="modal-title">Tambah Data Produk</h6>
+          </div>
+
+          <div class="modal-body">
+            <form class="form-horizontal form-validate-jquery" ng-submit="submit()">
+              <div class="col-md-6">
+                <fieldset class="content-group">
+                  
+                	<legend class="text-bold">Informasi Umum</legend>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Basic text input <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                      <input type="text" name="basic" class="form-control" required="required" placeholder="Text input validation">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">SKU <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                      <input type="text" placeholder="#PPBG-01-01" ng-model="form.sku"  name="sku" required="required" class="form-control">
+                      <input type="text" placeholder="#PPBG-01-01" ng-model="wisata.sku"  name="sku" required="required" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Nama Produk</label>
+                    <div class="col-lg-9">
+                      <input type="text" ng-model="form.nama" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Category</label>
+                    <div class="col-lg-9">
+                      <select class="select-search" ng-model="form.categoryID">
+                        <optgroup label="Mountain Time Zone">
+                          <option value="AZ">Arizona</option>
+                          <option value="CO">Colorado</option>
+                          <option value="ID">Idaho</option>
+                          <option value="WY">Wyoming</option>
+                        </optgroup>
+                        <optgroup label="Central Time Zone">
+                          <option value="AL">Alabama</option>
+                          <option value="IA">Iowa</option>
+                          <option value="KS">Kansas</option>
+                          <option value="KY">Kentucky</option>
+                        </optgroup>
+                        <optgroup label="Eastern Time Zone">
+                          <option value="CT">Connecticut</option>
+                          <option value="FL">Florida</option>
+                          <option value="MA">Massachusetts</option>
+                          <option value="WV">West Virginia</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Deskripsi</label>
+                    <div class="col-lg-9">
+                      <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.desc"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                  	<label class="control-label col-lg-3">Type Product <span class="text-danger">*</span></label>
+                  	<div class="col-lg-9">
+        						<div class="radio">
+        							<label>
+        								<input type="radio" name="radio-styled-color" ng-model="form.readystock" class="control-primary" value="Y">
+        								Ready Stock Product
+        							</label>
+        						</div>
+
+        						<div class="radio">
+        							<label>
+        								<input type="radio" name="radio-styled-color" ng-model="form.readystock" class="control-primary" value='N'>
+        								Pre Order Product
+        							</label>
+        						</div>
+                  	</div>
+                  </div>
+                  <div class="form-group" ng-show="form.readystock=='Y'">
+                    <label class="control-label col-lg-3">Stok Tersedia</label>
+                    <div class="col-lg-9">
+                      <input type="text" ng-model="form.stok" class="form-control">
+                    </div>
+                  </div>
+                <fieldset class="content-group">
+              
+                <legend class="text-bold">Gambar</legend>
+
+                  <div class="form-group">
+                    <div class="col-lg-9">
+                      <input type="hidden" ng-model="form.image" value="">
+
+                      <input type="file" name="unstyled_file" ng-model="browse" nv-file-select="" uploader="uploader" class="form-control" >
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-3" ng-repeat="item in uploader.queue">
+                    <div class="thumbnail" style="text-align:center">
+                      <div class="thumb">
+                        <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                      </div>
+                        <button type="button" class="btn btn-danger btn-xs" style="text-align:center;" ng-click="removeFile()">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        <br></br>
+                        <div class="progress">
+                          <div class="progress-bar" ng-style="{ 'width': item.progress + '%' }">
+                            
+                          </div>
+
+                        </div>
+
+                    </div>
+                  </div>
+
+                </fieldset>
+          
+
+
+              </div>
+              <div class="col-md-6">
+                <fieldset class="content-group">
+              
+                <legend class="text-bold">Harga</legend>
+                  <div class="form-group" >
+                    <label class="control-label col-lg-3">Stok Tersedia</label>
+                    <div class="col-lg-9">
+                      <input type="text" ng-model="form.harga" class="form-control">
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset class="content-group">
+                  <legend class="text-bold">Dimensi</legend>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Numbers only <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                      <input type="text" name="numbers" class="form-control" required="required" placeholder="Enter decimal number only">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-2">Lebar</label>
+                    <div class="col-lg-10">
+                      <input type="text" ng-model="form.width" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-2">Tinggi</label>
+                    <div class="col-lg-10">
+                      <input type="text" ng-model="form.height" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-2">Lebar Samping</label>
+                    <div class="col-lg-10">
+                      <input type="text" ng-model="form.length" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-2">Berat</label>
+                    <div class="col-lg-10">
+                      <input type="text" ng-model="form.weight" class="form-control">
+                    </div>
+                  </div>
+
+                </fieldset>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-link" data-dismiss="modal">Close</button>
+                  <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
+                  <button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+              </div>
+            </form>
+
+           
+          </div>
+
+
+
+
+        </div>
+      </div>

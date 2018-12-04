@@ -1,0 +1,829 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+        var validators = $(".form-validate-jquery-report").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+        <div class="sidebar sidebar-secondary sidebar-default ">
+          <div class="sidebar-content">
+
+
+
+
+            <!-- Action buttons -->
+            <div class="sidebar-category">
+              <div class="category-title">
+                <span>Tombol Aksi</span>
+
+                <ul class="icons-list">
+                  <li><a data-action="collapse" href="#"></a></li>
+                </ul>
+              </div>
+
+              <div class="category-content">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <button type="button" class="btn bg-teal-400 btn-block btn-float btn-float-lg" ng-click="formModals()"><i class="icon-add"></i> <span>Add</span></button>
+                   
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <!-- /action buttons -->
+
+          </div>
+        </div>
+
+    <div class="content-wrappper" ng-controller="CustomerCtrl as data">
+        <!-- Page header -->
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Pelanggan</span> </h4>
+            </div>
+
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+              
+              <li class="active">Pelanggan</li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+
+
+		
+            <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+              <ul class="nav navbar-nav no-border visible-xs-block">
+                <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+              </ul>
+
+              <div class="navbar-collapse collapse" id="navbar-filter">
+                <!-- <p class="navbar-text">Filter:</p> -->
+
+                <ul class="nav navbar-nav">
+                  <li><a href="#" ><i class="icon-add"></i></a></li>
+                  <li><a ng-click="removeSelected()"><i class="icon-trash"></i> </a></li>
+                  <li><a ng-click="reloadData()"><i class="icon-reload"></i> </a></li>
+
+
+                </ul>
+                <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px;">
+        					<div class="input-group">
+        						<input type="text" class="form-control" placeholder="Filter By Keyword... {{data.keywordSearch}}" ng-model="search" ng-change="searches()">
+        						<div class="input-group-btn">
+        							<button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+        								<li><a ng-click="keywordSearchSet('customerName')">Nama Customer </a></li>
+        								<li><a ng-click="keywordSearchSet('company')">Nama Perusahaan</a></li>
+        							
+        							</ul>
+        						</div>
+        					</div>
+                </div>
+
+                <div class="navbar-right">
+          
+                  <ul class="nav navbar-nav">
+                    <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                    <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                  </ul>
+                  <div class="nav navbar-nav" style="margin-top:3px;">
+                  	<select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+        					   </select>
+        				  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <table class="table datatable-header-offset custom ">
+              <thead>
+                <tr>
+                  <th style="width: 30px;">
+					           <div class="checker border-primary text-primary"><span ng-class="selectedAll?'checked':''"><input type="checkbox" class="styled"   ng-model="selectedAll" ng-click="checkAll()" ></span></div>
+				          </th>
+                  <th>Nama Customer</th>
+                  <th>Perusahaan</th>
+                  <th>Tanggal Bergabung</th>
+
+                  <th>Aksi</th>
+                  <th></th>
+                  <th></th>
+                
+
+
+                </tr>
+              </thead>
+              <tbody ng-if="data.total_count<1">
+              	<tr >
+                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+                </tr>
+              </tbody>
+              <tbody dir-paginate="cust in data.customer|itemsPerPage:data.itemsPerPage" total-items="data.total_count">
+
+             
+	                <tr>
+			            <td>
+				      			<div class="checker border-primary text-primary"><span ng-class="cust.selected?'checked':''"><input type="checkbox" class="styled" ng-model="cust.selected" ></span></div>
+			            
+			            </td>
+			            <td>{{cust.customerName}}</td>
+			            <td>{{cust.company}}</td>
+			            <td>{{cust.joinDate | date:'yyyy-MM-dd'}}</td>
+			          
+
+			            <td>
+			            	<button class="btn btn-default btn-xs accordion-toggle" data-toggle="collapse"  ng-click="invoiceHistory($index+1,cust.customerID)"><span class="glyphicon glyphicon-eye-open"></span></button>
+
+
+			            </td>
+			            <td>		                    
+			            	<ul class="icons-list">
+		                      <li class="dropdown">
+		                        <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+		                        <ul class="dropdown-menu dropdown-menu-right">
+		                          <li><a ng-click="editButton(cust.customerID)"><i class="icon-pencil7"></i> Edit Customer</a></li>
+		                          
+		                          <li><a ng-click="removeData(cust.customerID)"><i class="icon-cross2"></i> Hapus</a></li>
+		                        </ul>
+		                      </li>
+		                    </ul></td>
+	                  <td class="text-center">
+
+	                  </td>
+
+	                </tr>
+
+				       	<tr>
+				            <td colspan="12">
+                      <div class="panel-collapse collapse" id="demo{{$index+1}}" > 
+                        <div class="col-lg-12 col-md-12">
+                          <div class="panel panel-body">
+                            <div class="media">
+                              <div class="media-left">
+                                <a data-popup="lightbox">
+                                  <img src="http://layangwacan.com/uploads/customer/{{cust.photo}}" style="width: 70px; height: 70px;" class="img-circle" alt="">
+                                </a>
+                              </div>
+
+                              <div class="media-body">
+                                <div class="col-lg-6">
+                                <h6 class="media-heading"><b>{{cust.customerName|uppercase}}</b></h6>
+                                <p class="text-muted">{{cust.company|uppercase}}</p>
+                                <p class="text-muted"><i class="icon-envelope"></i> {{cust.email}}</p>
+                                <p class="text-muted"><i class="icon-phone"></i> {{cust.phone}}</p>
+                                </div>
+                                <div class="col-lg-6">
+                                  <b> Alamat :</b>
+                                  <p>
+                                    {{cust.address}}
+                                  </p>
+
+                                  <p class="text-muted"><i>Joined at : {{cust.joinDate | date:'yyyy-MM-dd'}}</i></p>
+                                </div>
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12">
+
+                          <!-- Marketing campaigns -->
+                          <div class="panel panel-flat">
+                            <div class="panel-heading">
+                              <h6 class="panel-title">Invoices Pembelian Produk</h6>
+                             </div>
+                           
+
+                            <div class="table-responsive">
+                            <div class="navbar-collapse collapse" id="navbar-filter">
+
+                              <div class="navbar-right">
+
+                                <div class="nav navbar-nav" style="margin-top:3px;">
+                                  <select ng-model='select.types' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rels()">
+                                   </select>
+                                </div>
+                              </div>
+                            </div>
+                              <table class="table table-xlg text-nowrap">
+                                <tbody>
+                                  <tr>
+
+
+                                    <td class="col-md-3">
+                                      <div class="media-left media-middle">
+                                        <a href="#" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-xs btn-icon"><i class="icon-alarm-add"></i></a>
+                                      </div>
+
+                                      <div class="media-left">
+                                        <h5 class="text-semibold no-margin">
+                                          Rp. {{invoice.total_transaksi | currency:'':0| comma2decimal}}<small class="display-block no-margin">Total Transaksi</small>
+                                        </h5>
+                                      </div>
+                                    </td>
+
+                                    <td class="col-md-3">
+                                      <div class="media-left media-middle">
+                                        <a href="#" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-xs btn-icon"><i class="icon-spinner11"></i></a>
+                                      </div>
+
+                                      <div class="media-left">
+                                        <h5 class="text-semibold no-margin">
+                                          {{invoice.total_barang}} <small class="display-block no-margin">Total Barang</small>
+                                        </h5>
+                                      </div>
+                                    </td>
+
+                                    <td class="text-right col-md-2">
+                                      <a ng-click="productReport(cust.customerID)" class="btn bg-teal-400"><i class="icon-statistics position-left"></i> Report</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table> 
+
+                            </div>
+                    
+
+                            <div class="table-responsive">
+                              <table class="table ">
+                                <thead>
+                                  <tr>
+                                    <th>Tanggal Invoices</th>
+                                    <th class="col-md-2">Nomor Invoices(#)</th>
+                                    <th>Nomor Order</th>
+                           
+                                    <th class="col-md-2">Total Invoice</th>
+                                    <th class="col-md-2">Status</th>
+                             
+                                  </tr>
+                                </thead>
+                                <tbody ng-if="any==true">
+
+                                  <tr dir-paginate="inv in invoice.invoice|itemsPerPage:iv.itemsPerPage" total-items="iv.total_count">
+                                    <td>
+                                      {{inv.invoiceDate}}
+                                    </td>
+                                    <td><span class="text-muted">#{{inv.invoiceNumber}}</span></td>
+                                    <td ><a  ui-sref="orderDetail({orderID:inv.orderID})">#{{inv.orderNumber}}</a></td>
+
+                                    <td><h6 class="text-semibold">{{inv.jumlah | currency:'':0| comma2decimal}}</h6></td>
+                                    <td>
+                                        <span class="label label-primary" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) > 10">{{diffDay(inv.invoiceDate,inv.invoiceDueDate)}} hari lagi</span>
+                                        <span class="label label-danger" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) < 10">{{diffDay(inv.invoiceDate,inv.invoiceDueDate)}} hari lagi</span>
+                                        <span ng-if="inv.invoiceStatus=='Cancel'" class="label label-warning">Canceled</span>
+                                        <span ng-if="inv.invoiceStatus=='Paid'" class="label label-success">Selesai</span>
+                                    </td>
+                                  </tr>
+
+
+
+                                </tbody>
+                              </table>
+                              <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getInvoice(newPageNumber)"></dir-pagination-controls></div>
+                            </div>
+                          </div>
+                          <!-- /marketing campaigns -->
+
+
+
+                        </div>
+
+                      
+                      </div> 
+				            </td>
+			         </tr>
+
+
+	
+              </tbody>
+            </table>
+		      	<div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getCustomer(newPageNumber)"></dir-pagination-controls></div>
+
+
+			<!-- Modal Area -->
+
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="false"  nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+              <div class="modal-dialog modal-full">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Tambah Data Customer</h6>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form class="form-horizontal form-validate-jquery" id="form" ng-submit="submit()">
+                      <div class="col-md-6">
+                        <fieldset class="content-group">
+                          
+                          <legend class="text-bold">Informasi Umum</legend>
+                          <input type="hidden" ng-model="form.productID" value="form.productID">
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Nama Customer<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                              <input type="text" placeholder="" ng-model="form.customerName"  name="nama" required="required" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Perusahaan </label>
+                            <div class="col-lg-9">
+                              <input type="text" ng-model="form.company" name="namas" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Alamat</label>
+                            <div class="col-lg-9">
+                              <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.address"></textarea>
+                            </div>
+                          </div>
+
+
+
+
+                        </fieldset>
+
+                        <fieldset class="content-group" ng-show="jenisProduk=='Single'">
+                      
+                          <legend class="text-bold">Gambar</legend>
+
+                          <div class="form-group">
+                            <div class="col-lg-9">
+                              <input type="hidden" ng-model="form.photo" value="">
+
+                              <input type="file" name="unstyled_file" ng-model="browse" nv-file-select="" uploader="uploader" class="form-control" >
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-sm-3" ng-hide="editImage==false" ng-show="editImage==true">
+
+                            <div class="thumbnail" style="text-align:center">
+                              <div class="thumb">
+                                <img src="{{url+'/uploads/customer/'+form.photo}}" style="height:100px; width:auto">
+                              </div>
+                                <br></br>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-sm-3" ng-repeat="item in uploader.queue">
+
+                            <div class="thumbnail" style="text-align:center">
+                              <div class="thumb">
+                                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                              </div>
+                                <button type="button" class="btn btn-danger btn-xs" style="text-align:center;" ng-click="removeFile()">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                                <br></br>
+                                <div class="progress">
+                                  <div class="progress-bar" ng-style="{ 'width': item.progress + '%' }">
+                                    
+                                  </div>
+
+                                </div>
+
+                            </div>
+                          </div>
+
+                        </fieldset>
+                  
+
+
+                      </div>
+                      <div class="col-md-6" >
+
+                        <fieldset class="content-group">
+                          <legend class="text-bold">Kontak</legend>
+                          <div class="form-group">
+                            <label class="control-label col-lg-2">Email</label>
+                            <div class="col-lg-10">
+                              <input type="text" name="email" ng-model="form.email" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-2">No Handphone</label>
+                            <div class="col-lg-10">
+                              <input type="text" name="no" ng-model="form.phone" class="form-control" required="required">
+                            </div>
+                          </div>
+
+
+                        </fieldset> 
+
+
+                      </div>
+
+                      <div class="col-md-12" style="text-align:right">
+                        <button type="submit" class="btn btn-link"  ng-click="closeModal()">Close</button>
+         <!--                  <button type="reset" ng-click="clean()" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button> -->
+                          <button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->
+
+			<!-- Modal Area -->
+
+
+            <!-- Primary modal -->
+            <div id="modal_theme_primary_report" class="modal fade" data-backdrop="true">
+              <div class="modal-dialog modal-ls">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModals()">&times;</button>
+                    <h6 class="modal-title">Export To Excel</h6>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form class="form-horizontal form-validate-jquery-report" id="formQ" ng-submit="download()">
+                      <div class="col-md-12">
+                        <fieldset class="content-group">
+                              <div class="form-group">
+                                  <label class="control-label col-lg-4">Folder Penyimpanan<span class="text-danger">*</span></label>
+                                  <div class="col-lg-8 ">
+                                  
+                                    <div class="input-group">
+                                      
+                                      <input type="text" class="form-control" ng-model="folder" readonly="true" required="required" name="input_group">
+                                     
+                                      <div class="input-group-btn">
+                                        <button type="button"  class="btn btn-default dropdown-toggle btn-icon" ng-click="openBrowser()"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                  
+                                      </div>
+                                    </div>
+                                  
+                                  </div>
+                              </div>                                                    
+          
+                          <div class="form-group">
+                            <label class="control-label col-lg-4" id="selected-file"> Nama File<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="filename" name="filename" class="form-control" required="required">
+        
+                            </div>
+                          </div>
+                          
+
+
+                        </fieldset>
+
+                     </div>
+                        <div class="col-md-12">
+                            <div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                <div class="heading-elements">
+                                    
+                                    <div class="heading-btn pull-right">
+                                        <button type="submit" ladda="submitting" data-style="expand-left" class="btn btn-info">
+                                        <span ng-show="submitting">{{count}}</span>
+                                        <span ng-show="!submitting">Save</span>
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->
+        </div>
+        <!-- /content area -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+
+
+
+

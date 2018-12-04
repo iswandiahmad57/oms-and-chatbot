@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HDKreasi</title>
+
+  <!-- Global stylesheets -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+  <link href="template/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+  <link href="template/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="template/assets/css/core.css" rel="stylesheet" type="text/css">
+  <link href="template/assets/css/components.css" rel="stylesheet" type="text/css">
+  <link href="template/assets/css/colors.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
+
+
+
+<script> 
+
+window.nodeRequire = require; 
+
+delete window.exports; delete window.module; 
+</script> 
+  <!-- Core JS files -->
+  <script type="text/javascript" src="template/assets/js/plugins/loaders/pace.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/core/libraries/jquery.min.js"></script>
+
+  <script type="text/javascript" src="template/assets/js/core/libraries/bootstrap.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/loaders/blockui.min.js"></script>
+  <!-- /core JS files -->
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+
+<script type="text/javascript" src="template/assets/js/plugins/loaders/progressbar.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="view1/view1.js"></script>
+  <script type="text/javascript" src="customer/customer.js"></script>
+  <script type="text/javascript" src="order/order.js"></script>
+  <script type="text/javascript" src="view2/view2.js"></script>
+  <script type="text/javascript" src="product/services.js"></script>
+   <script type="text/javascript" src="customer/services.js"></script>
+   <script type="text/javascript" src="order/services.js"></script>
+   <script type="text/javascript" src="invoice/invoice.js"></script>
+    <script type="text/javascript" src="setting/setting.js"></script>
+     <script type="text/javascript" src="setting/services.js"></script>
+   <script type="text/javascript" src="invoice/services.js"></script>
+   <script type="text/javascript" src="dashboard/services.js"></script>
+     <script type="text/javascript" src="laporan/laporan.js"></script>
+
+      <script type="text/javascript" src="login/login_services.js"></script>
+       <script type="text/javascript" src="dashboard/dashboard.js"></script>
+        <script type="text/javascript" src="login/login.js"></script>
+
+   <script type="text/javascript" src="pegawai/services.js"></script>
+     <script type="text/javascript" src="pegawai/pegawai.js"></script>
+
+   <script type="text/javascript" src="shipping/shipping.js"></script>
+      <script type="text/javascript" src="shipping/services.js"></script>
+  <script type="text/javascript" src="bower_components/angularUtils-pagination/dirPagination.js"></script>
+
+  <script type="text/javascript" src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="bower_components/ngSweetAlert/SweetAlert.js"></script>
+  <script type="text/javascript" src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+  <!-- Theme JS files -->
+  <script type="text/javascript" src="template/assets/js/core/libraries/jquery_ui/widgets.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+
+
+  <script type="text/javascript" src="template/assets/js/plugins/tables/datatables/extensions/natural_sort.js"></script>
+
+
+
+
+  <script type="text/javascript" src="template/assets/js/plugins/forms/validation/validate.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/selects/select2.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/styling/switch.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/styling/switchery.min.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/forms/styling/uniform.min.js"></script>
+
+  <!-- Theme JS files -->
+<link rel="stylesheet" href="bower_components/ladda/dist/ladda-themeless.min.css">
+
+<script src="bower_components/ladda/dist/spin.min.js"></script>
+<script src="bower_components/ladda/dist/ladda.min.js"></script>
+<script src="bower_components/angular-ladda/dist/angular-ladda.min.js"></script>
+
+
+  <script type="text/javascript" src="template/assets/js/core/app.js"></script>
+  <script type="text/javascript" src="template/assets/js/pages/tasks_list.js"></script>
+  <script type="text/javascript" src="template/assets/js/pages/invoice_template.js"></script>
+  <script type="text/javascript" src="template/assets/js/pages/invoice_archive.js"></script>
+  <script type="text/javascript" src="template/assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
+  <script type="text/javascript" src="../node_modules/ng-table/ng-table.js"></script>
+    <script type="text/javascript" src="../node_modules/ng-table/ng-table.css"></script>
+    <script type="text/javascript" src="template/assets/js/pages/dashboard.js"></script>
+
+
+  <script type="text/javascript" src="../node_modules/offline-js/offline.js"></script>
+<!--   <script type="text/javascript" src="../node_modules/ng-offline-js/index.js"></script> -->
+  <script type="text/javascript" src="template/assets/js/pages/login.js"></script>
+
+  <script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+<!--   <link rel="manifest" href="../manifest.json"> -->
+<script type="text/javascript" src="template/assets/js/plugins/notifications/noty.min.js"></script>
+  <script type="text/javascript">
+
+// if(navigator.onLine) { // true|false
+//   // ...
+//       Offline.options = {checks: {xhr: {url: 'http://google.com/'}}};
+//       var run = function(){
+//        if (Offline.state === 'up'){
+//          Offline.check();
+//           console.log(Offline.check());
+//           console.log(Offline.state);
+        
+//        }else{
+        
+//        }
+//       }
+
+
+//        setInterval(run, 5000);
+
+  </script>
+
+
+
+      
+
+
+
+
+
+  
+
+  <!-- /theme JS files -->
+
+</head>
+
+<body class="navbar-top pace-running" ng-controller="utama">
+
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+     
+
+      <ul class="nav navbar-nav pull-right visible-xs-block" >
+        <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+        <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        <li><a class="sidebar-mobile-secondary-toggle"><i class="icon-more"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile"  >
+      <ul class="nav navbar-nav" ng-if="$state.current.name!='login'">
+        <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+        <li><a class="sidebar-control sidebar-secondary-hide hidden-xs"><i class="icon-transmission"></i></a></li>
+      </ul>
+      <ul class="nav navbar-nav" ng-if="$state.current.name!='login'">
+    
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-bubble-notification"></i>
+            <span class="visible-xs-inline-block position-right">Notification</span>
+            <span class="badge bg-warning-400">{{countNotif}}</span>
+          </a>
+          
+          <div class="dropdown-menu dropdown-content">
+            <div class="dropdown-content-heading">
+              Konfirmasi
+              <ul class="icons-list">
+                <li><a ng-click="reloadNotif()"><i class="icon-sync"></i></a></li>
+              </ul>
+            </div>
+
+            <ul class="media-list dropdown-content-body width-350">
+              <li class="media" ng-repeat="not in notif">
+                <div class="media-left">
+                  <a  class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i class="icon-cart-add2"></i></a>
+                </div>
+
+                <div class="media-body">
+                  Konfirmasi Pembayaran Order <a href="#">{{not.orderNumber}}</a> Jumlah :{{not.keterangan}}
+                  <!-- <div class="media-annotation">4 minutes ago</div> -->
+                </div>
+              </li>
+
+            </ul>
+
+            <div class="dropdown-content-footer">
+              <a href="#" data-popup="tooltip" title="All activity"><i class="icon-menu display-block"></i></a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <p class="navbar-text" ng-controller="utama">
+        <span class="label bg-success" ng-show="online">Online  </span>
+        <span class="label bg-danger" ng-show="!online">Offline</span>
+      </p>
+
+      <ul class="nav navbar-nav navbar-right" ng-if="$state.current.name!='login'">
+
+        <li class="dropdown dropdown-user">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+     <!--        <img src="assets/images/image.png" alt=""> -->
+            <span>{{profile.name | uppercase}}</span>
+            <i class="caret"></i>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-right">
+ <!--            <li><a ng-click="openModal()"><i class="icon-cog5"></i> Change Password</a></li> -->
+            <li class="divider"></li>
+            <li><a ng-click="logout()"><i class="icon-switch2"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /main navbar --> 
+
+
+  <!-- Page container -->
+  <div class="page-container" >
+
+    <!-- Page content -->
+    <div class="page-content" ui-view>
+
+
+    </div>
+    <!-- /page content -->
+  </div>
+  <!-- /page container -->
+  <!-- /global stylesheets -->
+            <!-- Primary modal -->
+            <div id="modal_theme_password" class="modal fade" data-backdrop="false">
+
+              <div class="modal-dialog ">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Ubah Password</h6>
+                  </div>
+                  
+                  <div class="modal-body" >
+                    <form class="form-horizontal form-validate-jquery-password" id="formPassword" ng-submit="changePassword()">
+                      <div class="col-md-12">
+                        <fieldset class="content-group">
+                                            
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Password Baru Anda<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="password" name="repeat_password"  required="required" class="form-control">
+        
+                            </div>
+                          </div>
+
+                        </fieldset>
+
+                     </div>
+                        <div class="col-md-12">
+                            <div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                <div class="heading-elements">
+                                    
+                                    <div class="heading-btn pull-right">
+                                        <button type="submit" class="btn btn-info">Simpan </button>
+                                        <button ng-click="closeModal()" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+            </div>
+          <!-- /primary modal -->
+<script type="text/javascript">
+  
+          
+
+</script>
+
+
+</body>
+</html>

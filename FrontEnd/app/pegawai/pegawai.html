@@ -1,0 +1,394 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+
+
+    <div class="content-wrappper" ng-controller="PegawaiCtrl as data">
+        <!-- Page header -->
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Pegawai</span> </h4>
+            </div>
+
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+              
+              <li class="active">Pegawai</li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+
+
+		
+            <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+              <ul class="nav navbar-nav no-border visible-xs-block">
+                <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+              </ul>
+
+              <div class="navbar-collapse collapse" id="navbar-filter">
+                <!-- <p class="navbar-text">Filter:</p> -->
+
+                <ul class="nav navbar-nav">
+                  <li><a ng-click="formModals()" ><i class="icon-add"></i></a></li>
+                  <li><a ng-click="removeSelected()"><i class="icon-trash"></i> </a></li>
+                  <li><a ng-click="reloadData()"><i class="icon-reload"></i> </a></li>
+
+
+                </ul>
+                <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px;">
+        					<div class="input-group">
+        						<input type="text" class="form-control" placeholder="Filter By Keyword... {{data.keywordSearch}}" ng-model="search" ng-change="searches()">
+        						<div class="input-group-btn">
+        							<button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+        								<li><a ng-click="keywordSearchSet('nama')">Nama Pegawai</a></li>
+        								<li><a ng-click="keywordSearchSet('email')">Email</a></li>
+        							
+        							</ul>
+        						</div>
+        					</div>
+                </div>
+
+                <div class="navbar-right">
+          
+                  <ul class="nav navbar-nav">
+                    <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                    <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                  </ul>
+                  <div class="nav navbar-nav" style="margin-top:3px;">
+                  	<select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+        					   </select>
+        				  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <table class="table datatable-header-offset custom ">
+              <thead>
+                <tr>
+                  <th style="width: 30px;">
+					           <div class="checker border-primary text-primary"><span ng-class="selectedAll?'checked':''"><input type="checkbox" class="styled"   ng-model="selectedAll" ng-click="checkAll()" ></span></div>
+				          </th>
+                  <th>Nama Pegawai</th>
+                  <th>Email</th>
+                  <th>Contact Phone</th>
+                  <th>Role</th>
+
+                  <th>Aksi</th>
+                  <th></th>
+                  <th></th>
+                
+
+
+                </tr>
+              </thead>
+              <tbody ng-if="data.total_count<1">
+              	<tr >
+                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+                </tr>
+              </tbody>
+              <tbody dir-paginate="peg in data.employe|itemsPerPage:data.itemsPerPage" total-items="data.total_count">
+
+             
+	                <tr>
+			            <td>
+				      			<div class="checker border-primary text-primary"><span ng-class="peg.selected?'checked':''"><input type="checkbox" class="styled" ng-model="cust.selected" ></span></div>
+			            
+			            </td>
+			            <td>{{peg.name | uppercase}}</td>
+			            <td>{{peg.email}}</td>
+			            <td>{{peg.contact_phone}}</td>
+                  <td>{{peg.role}}</td>
+			          
+                  <td>
+                    <ul class="icons-list">
+                          <li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><a ng-click="editButton(peg.employeID)"><i class="icon-pencil7"></i> Edit Customer</a></li>
+                              
+                              <li><a ng-click="removeData(peg.employeID)"><i class="icon-cross2"></i> Hapus</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                  </td>
+                    <td class="text-center">
+
+                    </td>
+                  </tr>
+
+
+
+	
+              </tbody>
+            </table>
+		      	<div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getPegawai(newPageNumber)"></dir-pagination-controls></div>
+
+
+			<!-- Modal Area -->
+
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="false" >
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Tambah Data Pegawai</h6>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form class="form-horizontal form-validate-jquery" id="form" ng-submit="submit()">
+                      <div class="col-md-6">
+                        <fieldset class="content-group">
+                          
+                          <legend class="text-bold">Informasi Umum</legend>
+                          <input type="hidden" ng-model="form.productID" value="form.productID">
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Email<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                              <input type="text" placeholder="" ng-model="form.email"  name="email" required="required" class="form-control">
+        
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Password<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                              <input type="password" placeholder="" ng-model="form.password" required="required" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Nama Pegawai</label>
+                            <div class="col-lg-9">
+                              <input type="text" class="form-control"  ng-model="form.name">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Contact HP</label>
+                            <div class="col-lg-9">
+                              <input type="text"  class="form-control"  ng-model="form.contact_phone"></textarea>
+                            </div>
+                          </div>
+
+
+
+
+                        </fieldset>
+
+
+                  
+
+
+                      </div>
+
+
+                      <div class="col-md-12" style="text-align:right">
+                        <button type="submit" class="btn btn-link"  ng-click="closeModal()">Close</button>
+                          <button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->
+
+			<!-- Modal Area -->
+
+
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+
+
+
+

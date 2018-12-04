@@ -1,0 +1,352 @@
+
+           <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+          <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+	<!-- Theme JS files -->
+	<script src="node_modules/echart/dist/echarts.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+var echarts = require('echarts');
+require('echarts/lib/chart/bar');
+
+
+
+</script>
+      <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                lebar:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+	<div class="sidebar sidebar-secondary sidebar-default sidebar-fixed " ui-view='productSide'>
+
+	</div>
+			<!-- Main content -->
+			<div class="content-wrapper" >
+
+				<!-- Page header -->
+				<div class="page-header page-header-default">
+					<div class="page-header-content">
+						<div class="page-title">
+							<div class="media">
+								<div class="media-left">
+									<a href="#" class="profile-thumb">
+										<img src="{{url}}/uploads/produk/{{product.image}}" class="img-circle" alt="">
+									</a>
+								</div>
+
+								<div class="media-body">
+						    		<h1>{{product.nama | uppercase}} <small class="display-block">{{product.sku | uppercase}}</small></h1>
+								</div>
+
+<!-- 								<div class="media-right media-middle">
+									<ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+										<li><a href="#" class="btn btn-default"><i class="icon-pencil position-left"></i> Edit produk</a></li>
+										<li><a href="#" class="btn btn-default"><i class="icon-trash"></i> Hapus Produk</a></li>
+									</ul>
+								</div> -->
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="breadcrumb-line">
+						<ul class="breadcrumb">
+							<li><a ui-sref="home"><i class="icon-home2 position-left"></i> Home</a></li>
+							<li><a ui-sref="view1">Product</a></li>
+							<li class="active">Detail</li>
+						</ul>
+
+					</div>
+				</div>
+				<!-- /page header -->
+				<!-- Content area -->
+				<!-- Content area -->
+				<div class="content">
+					<div class="panel panel-flat">
+
+						<div class="panel-body">
+							<div class="tabbable">
+								<ul class="nav nav-tabs nav-tabs-bottom">
+									<li class="active"><a data-toggle="tab" href="#right-icon-tab1">Detail Produk <i class="icon-menu7 position-right"></i></a></li>
+									<li><a data-toggle="tab" href="#right-icon-tab2">Penjualan <i class="icon-mention position-right"></i></a></li>
+								</ul>
+
+								<div class="tab-content">
+									<div id="right-icon-tab1" class="tab-pane active">
+										<div class="product_desc">
+											<div class="col-md-6">
+											
+													<ul >
+														<li>
+															<div class="media-left">SKU</div>
+															<b class="media-right">: {{product.sku | uppercase}}</b>
+														</li>
+														<li>
+															<div class="media-left">Nama Produk</div>
+															<b class="media-right">: {{product.nama | uppercase}}</b>
+														</li>
+<!-- 														<li>
+															<div class="media-left">Category</div>
+															<b class="media-right">: {{}}</b>
+														</li> -->
+														<li>
+															<div class="media-left">Lebar (W)</div>
+															<b class="media-right">: {{product.width}}</b>
+														</li>
+														<li>
+															<div class="media-left">Panjang (L)</div>
+															<b class="media-right">: {{product.length}}</b>
+														</li>
+														<li>
+															<div class="media-left">Tinggi (T)</div>
+															<b class="media-right">: {{product.height}}</b>
+														</li>
+														<li>
+															<div class="media-left">Berat</div>
+															<b class="media-right">: {{product.weight}}</b>
+														</li>
+
+				
+
+													</ul>
+											
+
+			
+											</div>
+											<div class="col-md-6">
+												{{product.desc}}
+											</div>
+										</div>
+									</div>
+
+
+									<div id="right-icon-tab2" class="tab-pane">
+
+
+						<!-- Line and bar combination -->
+						<div class="panel panel-flat">
+							<div class="panel-heading">
+								<h5 class="panel-title">Grafik Penjualan</h5>
+
+							</div>
+
+							<div class="panel-body">
+							<div class="table-responsive">
+									 <div class="grafik-bar" eoption="eoption" style="width: 1200px;height:400px;"></div>
+								</div>
+							</div>
+						</div>
+						<!-- /line and bar combination -->
+					<!-- /line and bar combination -->
+									</div>
+
+									<div id="right-icon-tab4" class="tab-pane">
+								
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Task manager table -->
+					<div class="panel panel-white">
+						<div class="panel-heading">
+							<h6 class="panel-title">Informasi Stok</h6>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+						<table class="table datatable-header-offset table-bordered">
+							<thead>
+								<tr>
+					                <th>Stok</th>
+					                <th>Di pesan</th>
+					                <th>Tersedia</th>
+					            
+					            </tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{product.stok}}</td>
+									<td>{{product.leftInHand}}</td>
+									<td>{{(product.stok-product.leftInHand)|number:'0'}}</td>
+									
+								</tr>
+
+
+
+
+							</tbody>
+						</table>
+
+					</div>
+
+					<!-- Footer -->
+<!-- 					<div class="footer text-muted">
+						&copy; 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+					</div> -->
+					<!-- /footer -->
+
+				</div>
+
+				<!-- /content area -->
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->

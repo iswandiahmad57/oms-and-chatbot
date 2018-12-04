@@ -1,0 +1,342 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.tr a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+
+    <div class="content-wrappper" ng-controller="SettingCtrl as data">
+
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Magement Produk</span> - (Produk {{jenisProduk}})</h4>
+            </div>
+
+            <div class="heading-elements">
+              <a  ng-click="submit()" class="btn bg-blue">Save</a>
+            </div>
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="productDetail({productID:'237981979fcca08a240ff7c29a8a630a'})"><i class="icon-home2 position-left"></i> Home</a></li>
+              <li><a href="3_col_dual.html">Starters</a></li>
+              <li class="active">Dual sidebars</li>
+            </ul>
+
+
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+                    <!-- Horizontal form options -->
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <!-- Basic layout-->
+                            <form action="#" class="form-horizontal">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Pengaturan Umum</h5>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Nama perusahaan</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" ng-model="setting.nama_perusahaan" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Alamat</label>
+                                            <div class="col-lg-9">
+                                                <textarea class="form-control" ng-model="setting.alamat"></textarea>
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">No- Telp 1</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" ng-model="setting.no_telp2" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">No- Telp 2</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" ng-model="setting.no_telp1">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Email</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" ng-model="setting.email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Logo</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" ng-model="setting.logo_perusahaan" >
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- /basic layout -->
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <!-- Basic layout-->
+                            <form action="#" class="form-horizontal">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Pengaturan Invoice</h5>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Cara Pembayaran</label>
+                                            <div class="col-lg-9">
+                                                <textarea class="form-control" ng-model="setting.payment_detail"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- /basic layout -->
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <!-- Basic layout-->
+                            <form action="#" class="form-horizontal">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Pengaturan Periode Sistem</h5>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Tahun Periode</label>
+                                            <div class="col-lg-9">
+                                           
+                                            <select class="form-control" ng-model="setting.periode" required>
+                                              <option>Pilih Tahun</option>
+                                              <option ng-repeat="year in years" ng-selected="year==setting.periode">{{year}}</option>
+                                              </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- /basic layout -->
+
+                        </div>
+
+
+                    </div>
+                    <!-- /vertical form options -->
+
+
+
+
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+
+
+
+
+

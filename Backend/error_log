@@ -1,0 +1,18 @@
+[24-Nov-2017 15:29:47 UTC] PHP Fatal error:  Call to undefined function json_decode() in /home/layangwa/public_html/index.php on line 67
+[24-Nov-2017 15:30:07 UTC] PHP Fatal error:  Call to undefined function json_decode() in /home/layangwa/public_html/index.php on line 67
+[24-Nov-2017 15:30:24 UTC] PHP Fatal error:  Call to undefined function json_decode() in /home/layangwa/public_html/index.php on line 67
+[06-Jan-2018 13:34:10 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 06:34:10 UTC] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 13:34:11 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 13:34:41 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 06:34:41 UTC] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 13:34:42 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'ss' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 309
+[06-Jan-2018 14:06:30 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 296
+[06-Jan-2018 07:06:30 UTC] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 296
+[06-Jan-2018 14:06:30 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 296
+[06-Jan-2018 14:17:57 Asia/Jakarta] PHP Parse error:  syntax error, unexpected end of file in /home/layangwa/public_html/application/models/Product_model.php on line 336
+[06-Jan-2018 14:17:57 Asia/Jakarta] PHP Parse error:  syntax error, unexpected end of file in /home/layangwa/public_html/application/models/Product_model.php on line 336
+[06-Jan-2018 14:17:59 Asia/Jakarta] PHP Parse error:  syntax error, unexpected end of file in /home/layangwa/public_html/application/models/Product_model.php on line 336
+[06-Jan-2018 15:39:27 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 297
+[06-Jan-2018 08:39:28 UTC] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 297
+[06-Jan-2018 15:39:28 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'SELECT' (T_STRING) in /home/layangwa/public_html/application/models/Product_model.php on line 297

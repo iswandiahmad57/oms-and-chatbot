@@ -1,0 +1,353 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+<script type="text/javascript">
+
+var echarts = require('echarts');
+require('echarts/lib/chart/bar');
+
+
+
+</script>	   
+
+
+			      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Page header -->
+				<div class="page-header page-header-default">
+					<div class="page-header-content">
+						<div class="page-title">
+							<h4>Laporan Penjualan</h4>
+						</div>
+
+
+					</div>
+
+					<div class="breadcrumb-line">
+						<ul class="breadcrumb">
+							<li><a ui-sref="app"><i class="icon-home2 position-left"></i> Home</a></li>
+							<li class="active">Laporan</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /page header -->
+
+
+				<!-- Content area -->
+				<div class="content">
+
+					<!-- Main charts -->
+					<div class="row">
+						<div class="col-lg-12">
+
+							<!-- Traffic sources -->
+							<div class="panel panel-flat">
+								<div class="panel-heading">
+									<h6 class="panel-title">Grafik Penjualan Bulanan</h6>
+									<div class="heading-elements">
+										<form class="heading-form" action="#">
+											<div class="form-group">
+												<select ng-model="pil" class="change-date select-sm" id="select_date" ng-change="pilihProduct(pil)">
+													<option value="All">All</option>
+													<option ng-repeat="pro in product" value="{{pro.productID}}">
+														{{pro.nama}}
+													</option>
+												</select>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-lg text-nowrap">
+										<tbody>
+											<tr>
+
+												<td class="text-right col-md-2">
+													<a ng-click="productReport('product')" class="btn bg-indigo-300"><i class="icon-statistics position-left"></i> Export To Excel (By Product)</a>
+                          <a ng-click="productReport('customer')" class="btn bg-indigo-300"><i class="icon-statistics position-left"></i> Export To Excel (By Customer)</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>	
+								</div>
+
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive">
+													 <div class="grafik-bar" eoption="eoption" style="width: 1200px;height:400px;"></div>
+											
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="position-relative" id="traffic-sources"></div>
+							</div>
+							<!-- /traffic sources -->
+
+						</div>
+
+
+
+					</div>
+					<!-- /main charts -->
+
+
+					<!-- Dashboard content -->
+
+					<!-- /dashboard content -->
+
+
+					<!-- Footer -->
+					<div class="footer text-muted">
+		
+					</div>
+					<!-- /footer -->
+
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="true">
+              <div class="modal-dialog modal-ls">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Export To Excel</h6>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form class="form-horizontal form-validate-jquery" id="form" ng-submit="download()">
+                      <div class="col-md-12">
+                        <fieldset class="content-group">
+                              <div class="form-group">
+                                  <label class="control-label col-lg-4">Folder Penyimpanan<span class="text-danger">*</span></label>
+                                  <div class="col-lg-8 ">
+                                  
+                                    <div class="input-group">
+                                      
+                                      <input type="text" class="form-control" ng-model="folder" readonly="true" required="required" name="input_group">
+                                     
+                                      <div class="input-group-btn">
+                                        <button type="button"  class="btn btn-default dropdown-toggle btn-icon" ng-click="openBrowser()"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                  
+                                      </div>
+                                    </div>
+                                  
+                                  </div>
+                              </div>                                                    
+          
+                          <div class="form-group">
+                            <label class="control-label col-lg-4" id="selected-file"> Nama File<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="filename" name="filename" class="form-control" required="required">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-4" id="selected-file"> Bulan<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <select name="mySelect" id="mySelect" class="form-control"
+                                ng-options="option.month for option in month track by option.num"
+                                ng-model="selectedMonth"></select>
+                            </div>
+                          </div>
+                          
+
+
+                        </fieldset>
+
+                     </div>
+                        <div class="col-md-12">
+                            <div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                <div class="heading-elements">
+                                    
+                                    <div class="heading-btn pull-right">
+                                        <button type="submit" ladda="submitting" data-style="expand-left" class="btn btn-info">
+					<span ng-show="submitting">{{count}}</span>
+	                  <span ng-show="!submitting">Save</span>
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->

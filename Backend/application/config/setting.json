@@ -1,0 +1,16 @@
+{
+    "umum":{
+        "nama_perusahaan":"HDKreasi",
+        "alamat":"Jalan Nagasakti No 45, Jogjakarta ",
+        "no_telp1":"08208302838",
+        "no_telp2":"0290392093",
+        "logo_perusahaan":"ajsdf",
+        "email":"ahmad.iswandi1703@gmail.com"
+    },
+    "invoice":{
+        "payment_detail":"Pembayaran Dilaksanankan dengan metode yang oke"
+    },
+    "periode":{
+        "tahun":"2017"
+    }
+}

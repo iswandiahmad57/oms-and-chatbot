@@ -1,0 +1,650 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.tr a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+
+    <div class="content-wrappper" ng-controller="InvoiceCtrl as data">
+
+
+        <!-- Page header -->
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Invoice</span></h4>
+            </div>
+
+
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+              
+              <li class="active">Management Invoice</li>
+            </ul>
+
+          </div>
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+
+          <!-- Invoice archive -->
+          <div class="panel panel-white">
+
+
+
+          <!-- Detached content -->
+          <div class="container-detached">
+            <div class="content-detached">
+
+              <!-- Invoice grid options -->
+              <div class="navbar navbar-default navbar-xs navbar-component">
+                <ul class="nav navbar-nav no-border visible-xs-block">
+                  <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="navbar-filter">
+                  <p class="navbar-text">Filter:</p>
+                  <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-time-asc position-left"></i> By Month <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a ng-click="byMonth('All')">Show all</a></li>
+                        <li class="divider"></li>
+                        <li ng-repeat="m in month"><a ng-click="byMonth(m.num)">{{m.month}}</a></li>
+
+                      </ul>
+                    </li>
+
+                    <li class="dropdown">
+                      <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-amount-desc position-left"></i> By status <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a ng-click="byStatus('All')">Show all</a></li>
+                        <li class="divider"></li>
+                        <li ng-repeat="stat in status"><a ng-click="byStatus(stat.value)">{{stat.name}}</a></li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <div class="input-group" style="margin-top:5px; width:100%;">
+                        <input type="text" class="form-control" placeholder="Filter By Keyword... {{data.keywordSearch}}" ng-model="search" ng-change="searches()">
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a ng-click="keywordSearchSet('invoiceNumber')">Invoice Number</a></li>
+                            <li><a ng-click="keywordSearchSet('customerName')">Nama Pelanggan</a></li>
+                          
+                          </ul>
+
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <div class="navbar-right">
+                    <p class="navbar-text">Sorting:</p>
+                    <ul class="nav navbar-nav">
+                      <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                      <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                    </ul>
+                  <div class="nav navbar-nav" style="margin-top:3px;">
+                    <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="perPage()">
+                     </select>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /invoice grid options -->
+
+            </div>
+          </div>
+          <!-- /detached content -->
+
+
+            <table class="table table-lg table-border invoice-archive">
+              <thead>
+                <tr>
+                  <th>#</th>
+                          <th>Nomor Order</th>
+                          <th>Pelanggan</th>
+                          <th>Status</th>
+                          <th>Tanggal invoice</th>
+                          <th>Status</th>
+                          <th>Jumlah</th>
+
+                          <th class="text-center">Actions</th>
+                      </tr>
+              </thead>
+              <tbody  ng-repeat="inv in invoice" ng-init="$first?monthBefore=0:monthBefore=$index-1">
+
+               <tr class="active border-double" ng-if="$first"><td colspan="8" class="text-semibold" ><b>{{inv.group}}, {{inv.orderDate | date:'yyyy'}}</b></td></tr>
+                <tr class="active border-double" ng-if="inv.group!=invoice[monthBefore].group && !$first"><td colspan="8" class="text-semibold" ><b>{{inv.group}}, {{inv.orderDate | date:'yyyy'}}</b></td></tr>
+
+                <tr >
+                  <td><b>#{{inv.invoiceNumber}}</b></td>
+                          <td ><a  ui-sref="orderDetail({orderID:inv.orderID})">#{{inv.orderNumber}}</a></td>
+         
+                          <td>
+                            <h6 class="no-margin">
+                              <a >{{inv.customerName | uppercase}}</a>
+                           <!--    <small class="display-block text-muted">Payment method: Paypal</small> -->
+                            </h6>
+                          </td>
+                          <td>
+                   
+                          <select ng-model='inv.invoiceStatus' required ng-options='option.value as option.name for option in status' ng-change="changeStatus(inv.invoiceNumber,inv.invoiceStatus,inv.orderNumber,inv.messengerID)"></select>
+
+                          </td>
+                          <td>
+                            {{inv.invoiceDate | date:'dd MMMM, yyyy'}}
+                          </td>
+                          <td >
+                            <span class="label label-primary" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) > 10">{{diffDay(inv.invoiceDate,inv.invoiceDueDate)}} hari lagi</span>
+                            <span class="label label-danger" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) < 10 && diffDay(inv.invoiceDate,inv.invoiceDueDate)>0">{{diffDay(inv.invoiceDate,inv.invoiceDueDate)}} hari lagi</span>
+
+                            <span class="label label-danger" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) ==0">Last Day</span>
+                            <span class="label label-danger" ng-if="inv.invoiceStatus=='Waiting Payment' && diffDay(inv.invoiceDate,inv.invoiceDueDate) <0">Expired</span>
+
+                            <span ng-if="inv.invoiceStatus=='Cancel'" class="label label-warning">Canceled</span>
+                            <span ng-if="inv.invoiceStatus=='Paid'" class="label label-success">Paid</span>
+                          </td>
+
+                          <td>
+                            <h6 class="no-margin text-bold"> <b>Rp. {{inv.jumlah | currency:'':0| comma2decimal}}</b></h6>
+                          </td>
+                          <td class="text-center">
+                            <ul class="icons-list">
+                              <li><a ng-click="lihatInvoice(inv.invoiceNumber)"><i class="icon-file-eye"></i></a></li>
+                              <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file-text2"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a ng-click="prints(inv.invoiceNumber)"><i class="icon-printer"></i> Print</a></li>
+                                  <li class="divider"></li>
+                               
+                                  <li><a ng-click="remove(inv.invoiceNumber)"><i class="icon-cross2"></i> Remove</a></li>
+                                  <li class="divider"></li>
+                                  <li><a ng-click="sendInvoice('email',inv.orderID,inv.email)">Send To Email</a></li>
+                                  <li><a ng-click="sendInvoice('messenger',inv.orderID,inv.messengerID)" ng-if="inv.messengerID!=''"> Send To Messenger</a></li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </td>
+                      </tr>
+              
+
+              </tbody>
+            </table>
+          
+
+
+          </div>
+          <!-- /invoice archive -->
+
+
+
+
+
+        </div>
+        <!-- /content area -->
+
+                <div id="invoice">
+                                        <div class="col-md-12">
+                                            <!-- Invoice template -->
+                                            <div class="panel panel-white">
+
+                                                      <div class="panel-body no-padding-bottom head-oke">
+                                                          <div class="row">
+                                                              <div class="col-md-6 content-group">
+                                                                  <img src="../app/template/assets/images/logo.png" class="content-group mt-10 im" alt="" style="width: 120px;">
+                                                                  <ul class="list-condensed list-unstyled">
+                                                                      <li>{{setting.nama_perusahaan}}</li>
+                                                                      <li>{{setting.alamat}}</li>
+                                                                      <li>{{setting.no_telp1}}</li>
+                                                                      <li>{{setting.no_telp2}}</li>
+                                                                      <li>{{setting.email}}</li>
+                                                                  </ul>
+                                                              </div>
+
+                                                              <div class="col-sm-6 content-group">
+                                                                  <div class="invoice-details">
+                                                                      <h5 class="text-uppercase text-semibold"><b>Invoice {{order.invoiceNumber}}</b></h5>
+                                                                      <ul class="list-condensed list-unstyled">
+                                                                          <li>Tanggal Invoice: <span class="text-semibold">{{order.invoiceDate}}</span></li>
+                                                                          <li>Batas Waktu: <span class="text-semibold">{{order.invoiceDueDate}}</span></li>
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="row">
+                                                              <div class="col-md-6 col-lg-9 content-group">
+                                                                  <span class="text-muted">Kepada</span>
+                                                                  <ul class="list-condensed list-unstyled">
+                                                                      <li><h6><b>{{order.customerName | uppercase}}</b></h6></li>
+                                                                      <li><span class="text-semibold">{{order.company|uppercase}}</span></li>
+                                                                      <li>{{order.address}}</li>
+                                                                      <li>{{order.phone}}</li>
+                                                                      <li><a>{{order.email}}</a></li>
+                                                                  </ul>
+                                                              </div>
+
+                                                              <div class="col-sm-6 col-lg-3 content-group">
+                                                                  <span class="text-muted">Payment Details:</span>
+                                                                  <ul class="list-condensed list-unstyled invoice-payment-details">
+                                                                      <li>{{setting.payment_detail}}</li>
+                                                                 <!--      <li>Email: Iman@hdKreasi@gmail.com</li>
+                                                                      <li>HP: 08124232</li> -->
+                                                                  </ul>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+
+                                                      <div class="table-responsive table-oke">
+                                                          <table class="table table-bordered" >
+                                                              <thead>
+                                                                  <tr class="bg-grey-300">
+                                                                      <th >SKU</th>
+                                                                      <th class="col-sm-8">Produk</th>
+                                                                      <th class="col-sm-1">QTY</th>
+                                                                      <th class="col-sm-1">Harga</th>
+                                                                      <th class="col-sm-1">Diskon (%)</th>
+                                                                      <th class="col-sm-1">Sub Total</th>
+                                  
+                                                                  </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                              <tr ng-repeat="item in order.item">
+                                                                  <td>
+                                                                      <b>{{item.sku | uppercase}}</b>                                                                 
+                                                                  </td>
+                                                                  <td style="width:60%"><b>{{item.namaProduk | uppercase}}</b>
+                                                                  </td>
+                                                                  <td>{{item.itemQty}}</td>
+                                                                  <td>{{item.harga | currency:'':0| comma2decimal}}</td>
+                                                                  <td ng-if="item.itemDiscount==null">0</td>
+                                                                  <td ng-if="item.itemDiscount!=null">{{item.itemDiscount}}</td>
+                                                                  <td >{{item.itemTotal | currency:'':0| comma2decimal}}</td>                                                        
+                                                              </tr>
+                                                              <tr>
+                                                                  
+                                                              </tr>
+
+
+
+                                                              </tbody>
+                                                              <tfoot>
+                                                                  <tr>
+                                                                      <td colspan="5">Total :</td>
+                                                                      <td><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td colspan="6">Terbilang : {{terbilang(getTotalOrderItem('n')) | uppercase}}</td>
+                                                                      
+                                                                  </tr>
+                                                              </tfoot>
+                                                          </table>
+                                                      </div>
+
+                                                      <div class="panel-body foot-oke">
+                                                          <div class="row invoice-payment">
+                                                              <div class="col-md-7">
+                                                                  <div class="content-group">
+                                                                      <h6><b>Autorisasi Oleh</b></h6>
+                                                                      <br/><br/>
+
+                                                                      <ul class="list-condensed list-unstyled text-muted">
+                                                                          <li>{{order.orderAuthorized|uppercase}}</li>
+                                                          
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+
+                                                              <div class="col-sm-5">
+                                                                  <div class="content-group">
+                                                                      
+                                                                      <h6><b>Informasi Lainnya</b></h6>
+                                                                      <p class="text-muted">{{order.invoiceNote}}</p>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                          
+                                                      </div>
+                                            </div>
+                                            <!-- /invoice template -->
+
+                                        </div>
+                </div>
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="true">
+              <div class="modal-dialog modal-full">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Informasi Detail Invoice</h6>
+                  </div>
+                  
+                  <div class="modal-body">
+                      <div>
+                                              <div class="col-md-12" >
+                                                  <!-- Invoice template -->
+                                                  <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                      <h6 class="panel-title">Invoice</h6>
+                                                      <div class="heading-elements">
+                                                        
+                                                        <button type="button" ng-click="print()" class="btn btn-default btn-xs heading-btn"><i class="icon-printer position-left"></i> Print</button>
+                                                              </div>
+                                                    </div>
+                                                      <div class="panel-body no-padding-bottom head-oke">
+                                                          <div class="row">
+                                                              <div class="col-md-6 content-group">
+                                                                  <img src="../app/template/assets/images/logo.png" class="content-group mt-10 im" alt="" style="width: 120px;">
+                                                                  <ul class="list-condensed list-unstyled">
+                                                                      <li>{{setting.nama_perusahaan}}</li>
+                                                                      <li>{{setting.alamat}}</li>
+                                                                      <li>{{setting.no_telp1}}</li>
+                                                                      <li>{{setting.no_telp2}}</li>
+                                                                      <li>{{setting.email}}</li>
+                                                                  </ul>
+                                                              </div>
+
+                                                              <div class="col-sm-6 content-group">
+                                                                  <div class="invoice-details">
+                                                                      <h5 class="text-uppercase text-semibold"><b>Invoice {{order.invoiceNumber}}</b></h5>
+                                                                      <ul class="list-condensed list-unstyled">
+                                                                          <li>Tanggal Invoice: <span class="text-semibold">{{order.invoiceDate}}</span></li>
+                                                                          <li>Batas Waktu: <span class="text-semibold">{{order.invoiceDueDate}}</span></li>
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="row">
+                                                              <div class="col-md-6 col-lg-9 content-group">
+                                                                  <span class="text-muted">Kepada</span>
+                                                                  <ul class="list-condensed list-unstyled">
+                                                                      <li><h6><b>{{order.customerName | uppercase}}</b></h6></li>
+                                                                      <li><span class="text-semibold">{{order.company|uppercase}}</span></li>
+                                                                      <li>{{order.address}}</li>
+                                                                      <li>{{order.phone}}</li>
+                                                                      <li><a>{{order.email}}</a></li>
+                                                                  </ul>
+                                                              </div>
+
+                                                              <div class="col-sm-6 col-lg-3 content-group">
+                                                                  <span class="text-muted">Payment Details:</span>
+                                                                  <ul class="list-condensed list-unstyled invoice-payment-details">
+                                                                      <li>{{setting.payment_detail}}</li>
+                                                                 <!--      <li>Email: Iman@hdKreasi@gmail.com</li>
+                                                                      <li>HP: 08124232</li> -->
+                                                                  </ul>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+
+                                                      <div class="table-responsive table-oke">
+                                                          <table class="table table-bordered" >
+                                                              <thead>
+                                                                  <tr class="bg-grey-300">
+                                                                      <th >SKU</th>
+                                                                      <th class="col-sm-8">Produk</th>
+                                                                      <th class="col-sm-1">QTY</th>
+                                                                      <th class="col-sm-1">Harga</th>
+                                                                      <th class="col-sm-1">Diskon (%)</th>
+                                                                      <th class="col-sm-1">Sub Total</th>
+                                  
+                                                                  </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                              <tr ng-repeat="item in order.item">
+                                                                  <td>
+                                                                      <b>{{item.sku | uppercase}}</b>                                                                 
+                                                                  </td>
+                                                                  <td style="width:60%"><b>{{item.namaProduk | uppercase}}</b>
+                                                                  </td>
+                                                                  <td>{{item.itemQty}}</td>
+                                                                  <td>{{item.harga | currency:'':0| comma2decimal}}</td>
+                                                                  <td ng-if="item.itemDiscount==null">0</td>
+                                                                  <td ng-if="item.itemDiscount!=null">{{item.itemDiscount}}</td>
+                                                                  <td >{{item.itemTotal | currency:'':0| comma2decimal}}</td>                                                        
+                                                              </tr>
+                                                              <tr>
+                                                                  
+                                                              </tr>
+
+
+
+                                                              </tbody>
+                                                              <tfoot>
+                                                                  <tr>
+                                                                      <td colspan="5">Total :</td>
+                                                                      <td><b>{{getTotalOrderItem('n') | currency:'':0 | comma2decimal}}</b></td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td colspan="6">Terbilang : {{terbilang(getTotalOrderItem('n')) | uppercase}}</td>
+                                                                      
+                                                                  </tr>
+                                                              </tfoot>
+                                                          </table>
+                                                      </div>
+
+                                                      <div class="panel-body foot-oke">
+                                                          <div class="row invoice-payment">
+                                                              <div class="col-md-7">
+                                                                  <div class="content-group">
+                                                                      <h6><b>Autorisasi Oleh</b></h6>
+                                                                      <br/><br/>
+
+                                                                      <ul class="list-condensed list-unstyled text-muted">
+                                                                          <li>{{order.orderAuthorized|uppercase}}</li>
+                                                          
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+
+                                                              <div class="col-sm-5">
+                                                                  <div class="content-group">
+                                                                      
+                                                                      <h6><b>Informasi Lainnya</b></h6>
+                                                                      <p class="text-muted">{{order.invoiceNote}}</p>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                          
+                                                      </div>
+                                                  </div>
+                                                  <!-- /invoice template -->
+
+                                              </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+
+
+
+
+

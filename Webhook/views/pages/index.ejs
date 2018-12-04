@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <% include ../partials/header.ejs %>
+
+  <style type="text/css">
+    #footer {
+      background:#ffab62;
+      width:100%;
+
+      position:fixed;
+      bottom:0;
+      left:0;
+      margin-top: 40px;
+    }
+  </style>
+  
+<script>
+(function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'Messenger'));
+
+</script> 
+  <script type="text/javascript">
+  "use strict";
+    var app=angular.module('myApp',['ngRoute']);
+    // app.factory('Customer',['$http',function($http){
+    //     var services={};
+
+    //     services.get=(messengerID)=>{
+    //       return "dff";
+    //     }
+
+    //     return services;
+
+    // }]);
+    // app.config(function($compileProvider) {
+    //   $compileProvider.preAssignBindingsEnabled(true);
+    // });
+
+    app.controller('addCustomer',['$http','$scope',function($http,$scope){
+      
+        $scope.operation="Edit";
+
+
+        $scope.form={};
+        $scope.cek=true;
+
+      window.extAsyncInit = function() {
+        // the Messenger Extensions JS SDK is done loading 
+
+           var isSupported = MessengerExtensions.isInExtension(); 
+     
+
+            MessengerExtensions.getContext("1538926982800478", 
+              function success(result){
+                // alert("Success: "+result.psid);
+                document.getElementById('messengerID').value=result.psid;
+
+                $scope.getData(result.psid);
+              },
+              function error(result){
+              
+                $("#messengerID").val("zero");
+
+                // alert($("#messengerID").val());
+              }
+            );
+            $scope.emailError=false;
+
+            $scope.submit=function(){
+              $scope.form.messengerID=$("#messengerID").val();
+              $scope.form.operation=$scope.operation;
+              $http.post("/sendProfile",$scope.form).then(function(result){
+                console.log(result);
+                if(result.data.status==="Email Error"){
+                  $scope.emailError=true;
+                }else if(result.data.status==="Success"){
+                  //berhasil 
+                  alert("Data berhasil di inputkan");
+                  $scope.operation="Edit";
+                  MessengerExtensions.requestCloseBrowser(function success() {
+                    // webview closed
+                  }, function error(err) {
+                    // an error occurred
+                  });
+                  //close webview from here
+                }else{
+                  //tidak berhasi;
+                  alert("Data Tidak berhasil diinputkan");            
+                }
+             
+              })
+             
+            }
+      };
+
+
+        $scope.getData=function(messengerID){
+
+
+            $http.get("/customerDetail?messengerID="+messengerID).then(function (response) {
+               
+               console.log("adsfasdfasfd",response.data.status);
+               if(response.data.status==="Error"){
+                $scope.cek=true;
+                $scope.operation="Add";
+               }else{
+                $scope.operation="Edit"
+                $scope.cek=false;
+                $scope.form.email=response.data.data.email;
+                $scope.form.customerName=response.data.data.customerName;
+                $scope.form.phone=response.data.data.phone;
+                $scope.form.company=response.data.data.company;
+                $scope.form.address=response.data.data.address;
+                $scope.form.messengerID=response.data.data.messengerID;
+
+               }
+
+
+              },function(){
+                console.log("Gagal");
+              });
+        }
+
+
+
+       
+        $scope.cekEmail=function(email){
+         
+          
+
+            $http.get("/customerDetailEmail?email="+email).then(function (response) {
+               
+               console.log("adsfasdfasfd",response.data.status);
+               if(response.data.status==="Error"){
+                //isi form dibawah ini, anda belum terdaftar sebagai akun di database hdkreasi
+                alert("upps maaf kami tidak menemukan data anda, silahkan daftar sebagai member baru");
+                $scope.cek=false;
+                $scope.operation="Add";
+               }else{
+
+                alert("data anda telah terdapat di sistem kami, silahkan ubah data anda");
+                $scope.operation="Edit";
+                $scope.cek=false;
+                $scope.form.email=response.data.data.email;
+                $scope.form.customerName=response.data.data.customerName;
+                $scope.form.phone=response.data.data.phone;
+                $scope.form.company=response.data.data.company;
+                $scope.form.address=response.data.data.address;
+                $scope.form.messengerID=response.data.data.messengerID;
+               }
+            },function(){
+              console.log("Gagal");
+            });
+        }
+
+
+      
+     
+    }])
+  </script>
+
+</head>
+
+<body >
+
+  <% include ../partials/nav.ejs %>
+
+
+<div class="container" style="margin-bottom:150px;" ng-controller="addCustomer">
+  <div class="alert alert-info text-center" role="alert">
+    Hai, silahkan isi form di bawah ini jika belum terisi atau anda dapat mengubah data-data anda.{{nama}} <i class="alert-link">Di halaman ini kami memerlukan data diri anda untuk disimpan di database HDKreasi</i>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <form >
+      <input type="hidden" name="messengerID" ng-model="form.messengerID" id="messengerID">
+        <div class="form-group" ng-if="!cek">
+
+          
+          <label for="exampleInputEmail1">Email </label>
+           <input type="email" ng-model="form.email" class="form-control" id="exampleInputEmail1" placeholder="Email" required="required">
+
+           <span class ="label label-warning" ng-show="emailError">Email sudah digunakan</span>
+
+        </div>
+        <div class="form-group" ng-if="cek" >
+        <div class="alert alert-info text-center" role="alert">
+          Apakah anda bertransaksi dengan kami sebelumnya lewat admin kami? mungkin data anda telah ada namun tidak di platform messenger ini. silahkan gunakan fasilitas cek email untuk mendapatkan data anda 
+        </div>
+          <input type="hidden" name="messengerID" ng-model="form.messengerID" id="messengerID">
+          <label for="exampleInputEmail1">Email </label>
+          <div class="input-group">
+              <input type="email" ng-model="form.email" class="form-control" id="exampleInputEmail1" placeholder="Email" required="required">
+            <span class="input-group-btn">
+               <button class="btn btn-default" ng-click="cekEmail(form.email)" ng-show="cek">Cek</button>
+            </span>
+          </div><!-- /input-group -->
+        </div>
+
+        <div class="form-group" >
+          <label for="exampleInputPassword1">Nama</label>
+          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Nama" ng-disabled="cek" ng-model="form.customerName">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Nomor Handphone</label>
+          <input type="text" class="form-control" id="no_hp" placeholder="023823xxxx" ng-model="form.phone" ng-disabled="cek">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Perusahaan</label>
+          <input type="text" class="form-control" id="company" placeholder="PT Sujana" ng-model="form.company" ng-disabled="cek">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Alamat</label>
+          <textarea  class="form-control" ng-model="form.address" name="alamat" ng-disabled="cek" required="required"></textarea>
+        </div>
+<!--         <div class="form-group">
+          <label for="exampleInputFile">File input</label>
+          <input type="file" id="exampleInputFile">
+          <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> Check me out
+          </label>
+        </div> -->
+        <button type="submit" ng-click="submit()" class="btn btn-default">Submit</button>
+
+      </form>
+
+    </div>
+
+  </div> <!-- row -->
+
+</div>
+
+<footer id="footer">
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" style="text-align:center; margin-bottom:0">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="active">
+       
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
+</footer>
+
+
+</body>
+</html>

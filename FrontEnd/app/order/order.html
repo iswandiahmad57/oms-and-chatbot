@@ -1,0 +1,625 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.nav a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+<!--  -->
+
+    <div class="content-wrappper" ng-controller="OrderCtrl as data">
+
+        <!-- Page header -->
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Order</span> </h4>
+            </div>
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+               <li class="active">Order</li>
+            </ul>
+
+
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+
+
+            <table class="table datatable-header-offset custom ">
+                <tr>
+                    <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+                      <ul class="nav navbar-nav no-border visible-xs-block">
+                        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                      </ul>
+
+                      <div class="navbar-collapse collapse" id="navbar-filter">
+                        <!-- <p class="navbar-text">Filter:</p> -->
+
+                        <ul class="nav navbar-nav">
+                          <li><a ng-click="formModals()"><i class="icon-add"></i></a></li>
+                          <li><a ng-click="removeSelected()"><i class="icon-trash"></i> </a></li>
+                          
+
+
+                        </ul>
+                      
+                      
+                        <ul class="nav navbar-nav">
+
+                          <li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-amount-desc position-left"></i>Show<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a ng-click="byStatus('All')">Show all</a></li>
+                              <li class="divider"></li>
+                              <li ng-repeat="stat in statuss"><a ng-click="byStatus(stat.value)">{{stat.name}}</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter" style="width:30%;margin-top:3px; margin-bottom:0px;">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Filter By Keyword... {{data.keywordSearchO}}" ng-model="search" ng-change="searches()">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a ng-click="keywordSearchSet('orderNumber')">Nomor Order</a></li>
+                                <li><a ng-click="keywordSearchSet('orderName')">Nama Order</a></li>
+                              
+
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="navbar-right">
+                  
+                          <ul class="nav navbar-nav">
+                            <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                            <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                          </ul>
+                          <div class="nav navbar-nav" style="margin-top:3px;">
+                            <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+                             </select>
+                          </div>
+
+                          
+                        </div>
+                      </div>
+                    </div>
+                </tr>
+              <thead>
+
+                <tr>
+
+                  <th>Tanggal</th>
+                  <th>Nomor Order</th>
+                  <th>Nama Order</th>
+                  <th>Customer</th>
+                  <th>Deadline</th>
+                  <th>Jumlah</th>
+
+                  <th>Status</th>
+                  <th>Aksi</th>
+
+                
+
+
+                </tr>
+              </thead>
+              <tbody ng-if="data.total_count_order<1">
+                <tr >
+                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+                </tr>
+              </tbody>
+              <tbody dir-paginate="order in data.orders|itemsPerPage:data.itemsPerPage" total-items="data.total_count_order">
+                  <tr>
+
+                    <td>{{order.orderDate }}</td>
+                    <td><span class="label bg-success">#{{order.orderNumber}}</span></td>
+                    <td>{{order.orderName}}
+                    <td><b>{{order.customerName | uppercase}}</b></td>
+                    <td><span class="label bg-danger">{{order.orderFinishDate}}</span></td>
+
+                    <td>{{order.jumlah | number}}</td>
+                    <td ng-if="order.orderStatus=='Not Confirmed'"><span class="label bg-danger">{{order.orderStatus}}</span>
+                    <td ng-if="order.orderStatus!='Not Confirmed'"><span class="label bg-info">{{order.orderStatus}}</span>
+                    </td>
+                    <td class="text-center">
+                      <ul class="icons-list">
+                        <li class="dropdown">
+                          <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a ng-click="editButton(order.orderID)"><i class="icon-pencil7"></i> Edit Order</a></li>
+                            <li><a  ui-sref="orderDetail({orderID:order.orderID})"><i class="icon-eye"></i> Lihat Detail</a></li>
+                            <li><a ng-click="removeData(order.orderID)"><i class="icon-cross2"></i> Hapus</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+
+
+  
+              </tbody>
+            </table>
+              <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getOrder(newPageNumber)"></dir-pagination-controls></div>
+
+
+      <!-- Modal Area -->
+
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="false"  >
+                  <div id="mo" class="proceeds-modal"  ng-if="showCase" >
+
+                          <!-- Primary modal -->
+                    <div id="modal_theme_primary" >
+
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header bg-primary">
+                            <button type="button" class="close" ng-click="close()">&times;</button>
+                            <h6 class="modal-title">Pilih Data Customer</h6>
+
+                          </div>
+
+                          <div class="modal-body s">
+                            <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+
+                              <div class="navbar-collapse collapse" id="navbar-filter">
+                                <!-- <p class="navbar-text">Filter:</p> -->
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px; width:50%">
+                                  <div class="input-group">
+                                   <input type="text" class="form-control" placeholder="Filter By Keyword..." ng-model="seas" ng-change="searchess(seas)">
+                                   
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a ng-click="keywordSearch('customerName')">Nama Customer </a></li>
+                                        <li><a ng-click="keywordSearch('company')">Nama Perusahaan</a></li>
+                                      
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="navbar-right">
+                          
+                                  <ul class="nav navbar-nav">
+                                    <li class="{{asc}}"><a ng-click="sortClicks('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                                    <li class="{{desc}}"><a ng-click="sortClicks('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                                  </ul>
+                                  <div class="nav navbar-nav" style="margin-top:3px;">
+                                    <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+                                     </select>
+                                  </div>
+
+                                  
+                                </div>
+                              </div>
+                            </div>
+                            <table class="table datatable-header-offset custom table-responsive">
+                              <thead>
+                                <tr>
+
+                                  <th>Nama Customer</th>
+                                  <th>Perusahaan</th>
+                                  <th>Tanggal Bergabung</th>
+
+                                  <th>Aksi</th>
+    
+                                
+
+
+                                </tr>
+                              </thead>
+                              <tbody ng-if="data.total_count_cust<1">
+                                <tr >
+                                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+                                </tr>
+                              </tbody>
+                              <tbody dir-paginate="cust in data.customer|itemsPerPage:data.cs.itemsPerPage" total-items="data.cs.total_count_cust">
+
+                             
+                                  <tr>
+
+                                    <td>{{cust.customerName}}</td>
+                                    <td>{{cust.company}}</td>
+                                    <td>{{cust.joinDate}}</td>
+                                  
+
+                                    <td>
+                                      <button class="btn btn-default btn-xs" ng-click="pilihCustomer($index,cust.customerName,cust.customerID,cust.address)">Pilih</button>
+
+                                    </td>
+
+
+                                  </tr>
+                              </tbody>
+                            </table>
+                             <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.cs.getCustomer(newPageNumber)"></dir-pagination-controls></div>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-link"  ng-click="close()" >Close</button>
+                        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /primary modal -->
+                  </div>
+                  <div id="mo" class="proceeds-modal"  ng-if="showCaseProduct" >
+
+                          <!-- Primary modal -->
+                    <div id="modal_theme_primary" >
+
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header bg-primary">
+                            <button type="button" class="close" ng-click="closeProduct()">&times;</button>
+                            <h6 class="modal-title">Pilih Data Produk</h6>
+
+                          </div>
+
+                          <div class="modal-body s">
+                          <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+                            <ul class="nav navbar-nav no-border visible-xs-block">
+                              <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                            </ul>
+
+                            <div class="navbar-collapse collapse" id="navbar-filter">
+                              <!-- <p class="navbar-text">Filter:</p> -->
+                              <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px; width:50%">
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Filter By Keyword..." ng-model="search" ng-change="searchessProduct(search)">
+                                  <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                                  <ul class="dropdown-menu dropdown-menu-right">
+                                      <li><a ng-click="keywordSearchProduct('sku')">SKU</a></li>
+                                      <li><a ng-click="keywordSearchProduct('nama')">Nama Produk</a></li>
+                                    
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="navbar-right">
+                        
+                                <ul class="nav navbar-nav">
+                                  <li class="{{asc}}"><a ng-click="sortClicksProduct('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                                  <li class="{{desc}}"><a ng-click="sortClicksProduct('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                                </ul>
+                                <div class="nav navbar-nav" style="margin-top:3px;">
+                                  <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="relsProduct()">
+                                   </select>
+                                </div>
+
+                                
+                              </div>
+                            </div>
+                          </div>
+
+                          <table class="table datatable-header-offset custom ">
+                            <thead>
+                              <tr>
+
+                                <th>Produk SKU</th>
+                                <th>Nama Produk</th>
+                                <th>Stok Tersedia</th>
+                                <th>Harga</th>
+                                <th>Image</th>
+                                <th>Aksi</th>
+                              
+
+
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="data.total_counts<1">
+                                <td colspan="7"><b>Tidak Ada Data</b></td> 
+                              </tr>
+                              <tr dir-paginate="products in data.product|itemsPerPage:data.itemsPerPage" total-items="data.total_counts">
+                                <td>{{products.sku}}</td>
+                                <td>{{products.nama}}</td>
+                                <td ng-if="products.readystock=='Y' && products.leftInHand !=products.stok">{{products.stok-products.leftInHand}}</td>
+                                <td ng-if="products.readystock=='N'"><span class="label label-success">Pre Order</span></td>
+                                <td ng-if="products.readystock=='Y' && products.leftInHand ==products.stok"><span class="label label-warning">Stok Habis</span></td>
+                                <td>{{products.harga}}</td>
+                                <td>{{}}</td>
+                                <td class="text-center" >
+
+                                <button class="btn btn-default btn-xs" ng-if="products.readystock=='Y' && products.leftInHand !=products.stok" ng-click="pilihProduct(products.nama,products.productID,products.harga,products.stok,products.leftInHand,products.readystock)">Pilih</button>
+                                <button class="btn btn-default btn-xs" ng-if="products.readystock=='N'" ng-click="pilihProduct(products.nama,products.productID,products.harga,products.stok,products.readystock)">Pilih</button>
+
+                                                
+                                </td>
+
+                              </tr>
+
+                            </tbody>
+                          </table>
+                          <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getProduct(newPageNumber)"></dir-pagination-controls></div>
+
+
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-link"  ng-click="close()" >Close</button>
+                        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /primary modal -->
+                  </div>
+                  <div class="modal-dialog modal-full">
+                    <div class="modal-content">
+                      <div class="modal-header bg-primary">
+                        <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                        <h6 class="modal-title">Tambah Data Order</h6>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal form-validate-jquery" id="form" ng-submit="submit()">
+                          <div class="col-md-6">
+                            <fieldset class="content-group">
+                              
+                              <legend class="text-bold">Informasi Umum</legend>
+                              <input type="hidden" ng-model="form.productID" value="form.productID">
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Tanggal Order<span class="text-danger">*</span></label>
+                                <div class="col-lg-9">
+                                  <input type="date" placeholder="" ng-model="orderDate"  name="date" required="required" class="form-control">
+            
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-label col-lg-3">Customer <span class="text-danger">*</span></label>
+                                  <div class="col-lg-9 ">
+                                    <input type="hidden" ng-model="form.customerID" required="required">
+                                    <div class="input-group">
+                                      
+                                      <input type="text" class="form-control" ng-model="namaCustomer" readonly="true" required="required" name="input_group">
+                                     
+                                      <div class="input-group-btn">
+                                        <button type="button"  class="btn btn-default dropdown-toggle btn-icon" ng-click="showw()"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                  
+                                      </div>
+                                    </div>
+                                  
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Nama Order<span class="text-danger">*</span></label>
+                                <div class="col-lg-9">
+                                  <input type="text" ng-model="form.orderName" name="namas" class="form-control" required="required">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Deskripsi</label>
+                                <div class="col-lg-9">
+                                  <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.orderDesc"></textarea>
+                                </div>
+                              </div>
+
+
+
+
+
+                            </fieldset>
+
+
+                      
+
+
+                          </div>
+
+                          <div class="col-md-12">
+                            <legend class="text-bold">Item Order</legend>
+                            <table class="table datatable-header-offset custom ">
+                              <thead>
+                                <tr>
+                                  <th style="width:350px;">Produk</th>
+                                  <th style="width:150px;">QTY</th>
+                                  
+                        
+                                  <th style="width:250px;">Harga / unit</th>
+                                  <th style="width:150px;">Diskon %</th>
+                                  <th style="width:250px;">Jumlah</th>
+      
+                 
+                                  <th></th>
+                                
+
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="order in form.item " >
+
+                                  <td>
+
+                                      <div class="input-group">
+                                        <input type="hidden" class="form-control" ng-model="order.productID"  name="harga">
+                                       <input type="text" class="form-control" ng-model="order.product"  >
+                                        <div class="input-group-btn">
+                                          <button type="button" class="btn btn-default dropdown-toggle btn-icon" ng-click="showwProduct($index)"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                    
+                                        </div>
+                                      </div>
+                                 </td>
+                                  <td><input type="text" ng-disabled="order.product==''" class="form-control" ng-model="order.itemQty" ng-change="cekStok(order.readystock,order.itemQty,order.stok,order.leftInHand,$index)" name="noItem{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-disabled="order.product==''" ng-model="order.itemUnitPrice"  name="noItemHarga{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-disabled="order.product==''" ng-model="order.itemDiscount"  name="noItemDiscount{{$index}}"></td>
+                                  <td>
+
+                                  <input type="text" class="form-control" readonly="true" placeholder="{{amount(order.itemQty,order.itemUnitPrice,order.itemDiscount,$index,'none')  | currency:'': 0 }}" ></td>
+                   
+
+                                  <td><a ng-click="addNewVariant('none',$index+1)" ng-if="$last"><i class="icon-add"></i></a> <a ng-hide="$first" ng-click="removeVariant($index)" ><i class="icon-trash"></i></a> </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="4"></td>
+                                  <td><input type="text" class="form-control" readonly="true" placeholder="{{getTotal('none') | currency:'':0}}" name="total"></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+
+                          </div>
+                          <div class="col-md-12">
+                            <legend class="text-bold">Extra Item</legend>
+                            <table class="table datatable-header-offset custom ">
+                              <thead>
+                                <tr>
+                                  <th style="width:350px;">Deskripsi</th>
+                                  <th style="width:150px;">QTY</th>
+                                  
+                        
+                                  <th style="width:250px;">Harga / unit</th>
+                                  <th style="width:150px;">Diskon %</th>
+                                  <th style="width:250px;">Jumlah</th>
+      
+                 
+                                  <th></th>
+                                
+
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="order in extra" >
+
+                                  <td>
+
+                                      
+                                        <input type="hidden" class="form-control" ng-model="order.productID"  name="harga">
+                                        <input type="text" class="form-control" ng-model="order.itemDesc"  name="extra{{$index}}" >
+                                      
+                                 </td>
+                                  <td><input type="text" class="form-control" ng-model="order.itemQty" name="noExtra{{$index}}"></td>
+                                  <td><input type="text" class="form-control"   ng-model="order.itemUnitPrice" name="noExtraHarga{{$index}}"></td>
+                                  <td><input type="text" class="form-control"  ng-model="order.itemDiscount" name="noExtraDiscount{{$index}}" ></td>
+                                  <td>
+
+                                  <input type="text" class="form-control" readonly="true" placeholder="{{amount(order.itemQty,order.itemUnitPrice,order.itemDiscount,$index,'extra')  | currency:'': 0 }}" ></td>
+                   
+
+                                  <td><a ng-click="addNewVariant('extra',$index+1)" ng-if="$last"><i class="icon-add"></i></a> <a ng-hide="$first" ng-click="removeVariantExtra($index)" ><i class="icon-trash"></i></a> </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="4"></td>
+                                  <td><input type="text" class="form-control" readonly="true" placeholder="{{getTotal('extra') | currency:'':0}}" name="total"></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+
+                          </div>
+                         <div class="col-md-6" >
+
+                            <fieldset class="content-group">
+                              <legend class="text-bold"></legend>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Tanggal Order Selesai<span class="text-danger">*</span></label>
+                                <div class="col-lg-9">
+                                  <input type="date" placeholder="" ng-model="orderFinishDate" name="dates"  required="required" class="form-control">
+            
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Alamat Penagihan</label>
+                                <div class="col-lg-9">
+                                  <textarea rows="5" cols="5" class="form-control" placeholder="" ng-model="form.orderDeliveryAddress"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Instruksi Pembayaran</label>
+                                <div class="col-lg-9">
+                                  <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea" ng-model="form.orderDeliveryInstruction"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-lg-3">Autorisasi Oleh</label>
+                                <div class="col-lg-9">
+                                  <input type="text" ng-model="form.orderAuthorized" class="form-control" >
+                                </div>
+                              </div>
+
+
+                            </fieldset> 
+
+
+                          </div>
+
+                          <div class="col-md-12" style="text-align:right">
+                            <button type="submit" class="btn btn-link"  ng-click="closeModal()">Close</button>
+                              <button type="reset" ng-click="clean()" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
+                              <button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="modal-footer">
+                     
+                      </div>
+
+
+                  </div>
+
+
+
+            </div>
+
+
+
+      <!-- Modal Area -->
+
+
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+          <!-- /primary modal -->
+
+
+
+

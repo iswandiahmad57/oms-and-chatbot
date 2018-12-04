@@ -1,0 +1,62 @@
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content" ng-controller="LoginController">
+
+					<!-- Advanced login -->
+					<form ng-submit="login()">
+						<div class="panel panel-body login-form" style="width:320px; margin: 0 auto 20px auto;">
+							<div class="text-center">
+								<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+								<h5 class="content-group">Login to your account <small class="display-block">Your credentials</small> <small>{{error}}</small></h5>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="text" class="form-control" placeholder="Email" required="required" ng-model="form.email">
+								<div class="form-control-feedback">
+									<i class="icon-user text-muted"></i>
+								</div>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="password" class="form-control" placeholder="Password" ng-model="form.password">
+								<div class="form-control-feedback">
+									<i class="icon-lock2 text-muted"></i>
+								</div>
+							</div>
+
+<!-- 							<div class="form-group login-options">
+								<div class="row">
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type="checkbox" class="styled" checked="checked">
+											Remember
+										</label>
+									</div>
+
+									<div class="col-sm-6 text-right">
+										<a href="login_password_recover.html">Forgot password?</a>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="form-group">
+								<button type="submit" class="btn bg-blue btn-block" >Login <i class="icon-arrow-right14 position-right"></i></button>
+							</div>
+
+					</form>
+					<!-- /advanced login -->
+
+
+					<!-- Footer -->
+					<div class="footer text-muted text-center">
+
+					</div>
+					<!-- /footer -->
+
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->

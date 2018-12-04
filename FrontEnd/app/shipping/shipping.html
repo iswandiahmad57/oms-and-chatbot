@@ -1,0 +1,612 @@
+     <script type="text/javascript" src="template/assets/js/pages/form_select2.js"></script> 
+     <script type="text/javascript" src="template/assets/js/pages/form_validation.js"></script>
+      
+     <script type="text/javascript">
+            // Primary
+          $(".control-primary").uniform({
+              radioClass: 'choice',
+              wrapperClass: 'border-primary-600 text-primary-800'
+          });
+          $('.tr a').click(function (event) {
+            event.preventDefault();
+            // or use return false;
+          });
+    // Initialize
+        var validator = $(".form-validate-jquery").validate({
+            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+            errorClass: 'validation-error-label',
+            successClass: 'validation-valid-label',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+
+            // Different components require proper error label placement
+            errorPlacement: function(error, element) {
+
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
+                    if(element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo( element.parent().parent().parent().parent() );
+                    }
+                     else {
+                        error.appendTo( element.parent().parent().parent().parent().parent() );
+                    }
+                }
+
+                // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo( element.parent().parent().parent() );
+                }
+
+                // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo( element.parent() );
+                }
+
+                // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo( element.parent().parent() );
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            validClass: "validation-valid-label",
+            success: function(label) {
+                label.addClass("validation-valid-label").text("Success.")
+            },
+            rules: {
+                password: {
+                    minlength: 5
+                },
+                repeat_password: {
+                    equalTo: "#password"
+                },
+                email: {
+                    email: true
+                },
+                repeat_email: {
+                    equalTo: "#email"
+                },
+                minimum_characters: {
+                    minlength: 10
+                },
+                maximum_characters: {
+                    maxlength: 10
+                },
+                minimum_number: {
+                    min: 10
+                },
+                maximum_number: {
+                    max: 10
+                },
+                number_range: {
+                    range: [10, 20]
+                },
+                url: {
+                    url: true
+                },
+                date: {
+                    date: true
+                },
+                date_iso: {
+                    dateISO: true
+                },
+                numbers: {
+                    number: true
+                },
+                harga: {
+                    digits: true
+                },
+                no:{
+                  digits:true
+                },
+                tinggi:{
+                  digits:true
+                },
+                lebar_samping:{
+                  digits:true
+                },
+                berat:{
+                  digits:true
+                },
+                creditcard: {
+                    creditcard: true
+                },
+                basic_checkbox: {
+                    minlength: 2
+                },
+                styled_checkbox: {
+                    minlength: 2
+                },
+                switchery_group: {
+                    minlength: 2
+                },
+                switch_group: {
+                    minlength: 2
+                }
+            },
+            messages: {
+                custom: {
+                    required: "This is a custom error message",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+
+
+        // Reset form
+        $('#add').on('click', function() {
+            validator.resetForm();
+        });
+      </script>
+      <!-- Main sidebar Ini merupakan Default Layout -->
+      <div class="sidebar sidebar-main sidebar-fixed" ui-view='main-sidebar'>
+
+      </div>
+      <!-- /main sidebar -->
+
+
+    <div class="content-wrappper" ng-controller="ShippingCtrl as data">
+
+        <!-- Page header -->
+        <div class="page-header page-header-default">
+          <div class="page-header-content">
+            <div class="page-title">
+              <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Management Pengiriman</span> </h4>
+            </div>
+
+            <div class="heading-elements">
+    
+            </div>
+          </div>
+
+          <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+              <li><a ui-sref="app()"><i class="icon-home2 position-left"></i> Home</a></li>
+              
+              <li class="active">Shipping</li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- /page header -->
+
+
+
+
+        <!-- Content area -->
+
+        <div class="content" >
+
+          <!-- Invoice archive -->
+          <div class="panel panel-white">
+
+
+
+          <!-- Detached content -->
+          <div class="container-detached">
+            <div class="content-detached">
+
+              <!-- Invoice grid options -->
+              <div class="navbar navbar-default navbar-xs navbar-component">
+                <ul class="nav navbar-nav no-border visible-xs-block">
+                  <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="navbar-filter">
+                <ul class="nav navbar-nav">
+                  <li><a class="button btn-default" ng-click="formModal()"><i class="icon-add"></i></a></li>
+                </ul>
+                  <p class="navbar-text">Filter:</p>
+                  <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-time-asc position-left"></i> By Month <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a ng-click="byMonth('All')">Show all</a></li>
+                        <li class="divider"></li>
+                        <li ng-repeat="m in month"><a ng-click="byMonth(m.num)">{{m.month}}</a></li>
+
+                      </ul>
+                    </li>
+
+                    <li class="dropdown">
+                      <a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-amount-desc position-left"></i> By status <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a ng-click="byStatus('All')">Show all</a></li>
+                        <li class="divider"></li>
+                        <li ng-repeat="stat in statuss"><a ng-click="byStatus(stat.value)">{{stat.name}}</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <div class="navbar-right">
+                    <p class="navbar-text">Sorting:</p>
+                    <ul class="nav navbar-nav">
+                      <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                      <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                    </ul>
+                  <div class="nav navbar-nav" style="margin-top:3px;">
+                    <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="perPage()">
+                     </select>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /invoice grid options -->
+
+            </div>
+          </div>
+          <!-- /detached content -->
+
+            <table class="table table-lg table-border invoice-archive">
+              <thead>
+                <tr>
+                  <th>#</th>
+                      
+                          <th>Tanggal Pengiriman</th>
+                          <th>Status</th>
+                          <th>Kurir</th>
+                          <th>Pelanggan</th>
+                          <th>Biaya Pengiriman</th>
+                          <th>Tracking Kode</th>
+                          <th>Status</th>
+                          <th>Jumlah Barang</th>
+
+                          <th class="text-center">Actions</th>
+                      </tr>
+              </thead>
+              <tbody  ng-repeat="ship in data.shipping" ng-init="$first?monthBefore=0:monthBefore=$index-1">
+
+               <tr class="active border-double" ng-if="$first"><td colspan="12" class="text-semibold" ><b>{{ship.group}}, {{ship.tanggal_pengiriman | date:'yyyy'}}</b></td></tr>
+                <tr class="active border-double" ng-if="inv.group!=data.invoice[monthBefore].group && !$first"><td colspan="12" class="text-semibold" ><b>{{ship.group}}, {{ship.tanggal_pengiriman | date:'yyyy'}}</b></td></tr>
+
+                     <tr >
+                  
+           
+                          <td ><a  ui-sref="orderDetail({orderID:ship.orderID})">#{{ship.orderNumber}}</a></td>
+                          <td>
+                            {{ship.tanggal_pengiriman | date:'dd MMMM, yyyy'}}
+                          </td>
+
+                          <td>
+                   
+                          <select ng-model='ship.shippingStatus' required ng-options='option.value as option.name for option in statuss' ng-change="changeStatus(ship.id,ship.shippingStatus)"></select>
+
+                          </td>
+
+                          <td>
+                            <h6 class="no-margin">
+                              <a >{{ship.kurir | uppercase}}</a>
+                           <!--    <small class="display-block text-muted">Payment method: Paypal</small> -->
+                            </h6>
+                          </td>
+
+                          <td>
+                            <h6 class="no-margin">
+                              <a >{{ship.customerName | uppercase}}</a>
+                           <!--    <small class="display-block text-muted">Payment method: Paypal</small> -->
+                            </h6>
+                          </td>
+                          <td>{{ship.harga_pengiriman}}</td>
+                          <td>{{ship.tracking_kode}}</td>
+
+
+                          <td >
+                            <span class="label label-primary" ng-if="ship.shippingStatus=='Pengiriman' ">{{ship.shippingStatus}}</span>
+                            <span ng-if="ship.shippingStatus=='Diterima'" class="label label-success">{{ship.shippingStatus}}</span>
+                          </td>
+
+                          <td>
+                            <h6 class="no-margin text-bold"> <b>{{ship.jumlah | currency:'':0| comma2decimal}}</b></h6>
+                          </td>
+                          <td class="text-center">
+                            <ul class="icons-list">
+                              <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file-text2"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a ng-click="editButton(ship.id)"><i class="icon-pencil"></i> Edit</a></li>
+                               
+                                  <li><a ng-click="removeData(ship.id)"><i class="icon-cross2"></i> Remove</a></li>
+                                  <li class="divider"></li>
+                                  <li><a ng-click="print(ship.orderDeliveryAddress,ship.customerName)"><i class="icon-printer"></i> Print Label</a></li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </td>
+                      </tr>
+              
+
+              </tbody>
+            </table>
+          
+
+
+          </div>
+          <!-- /invoice archive -->
+                <div id="invoice">
+                                        <div class="col-md-12">
+                                            <!-- Invoice template -->
+                                            <div class="panel panel-white">
+                                                    <div class="row">
+                                                      <div class="col-md-12">
+                                                            <h1 style="font-size:30px;font-weight:600px">Kepada : {{custName}}</h1>
+                                                            <h1 style="font-size:30px;font-weight:600px"><b>{{orderDeliveryAddress}}</b></h1>
+
+                                                
+
+                                                      </div>
+                                                      <div class="col-md-12">
+                                                            <h1 style="font-size:30px;font-weight:600px">Kepada : {{custName}}</h1>
+                                                            <h1 style="font-size:30px;font-weight:600px"><b>{{orderDeliveryAddress}}</b></h1>
+
+                                                
+
+                                                      </div>
+                                                      <div class="col-md-12">
+                                                            <h1 style="font-size:30px;font-weight:600px">Kepada : {{custName}}</h1>
+                                                            <h1 style="font-size:30px;font-weight:600px"><b>{{orderDeliveryAddress}}</b></h1>
+
+                                                
+
+                                                      </div>
+                                                    </div>
+
+
+                                            </div>
+                                            <!-- /invoice template -->
+
+                                        </div>
+                </div>
+            <!-- Primary modal -->
+            <div id="modal_theme_primary" class="modal fade" data-backdrop="false">
+              <div class="modal-dialog ">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <button type="button" class="close" ng-click="closeModal()">&times;</button>
+                    <h6 class="modal-title">Tambah Data Pengiriman</h6>
+                  </div>
+                  
+                  <div class="modal-body" >
+                    <form class="form-horizontal form-validate-jquery-kirim" id="formPengiriman" ng-submit="submitPengiriman()">
+                      <div class="col-md-12">
+                        <fieldset class="content-group">
+                              <div class="form-group" ng-if="oper!='Edit'">
+                                  <label class="control-label col-lg-4">Order<span class="text-danger">*</span></label>
+                                  <div class="col-lg-8 ">
+                                    <input type="hidden" ng-model="form.customerID" required="required">
+                                    <div class="input-group">
+                                      
+                                      <input type="text" class="form-control" ng-model="viewOrder" readonly="true" required="required" name="input_group">
+                           
+                                      <div class="input-group-btn">
+                                        <button type="button"  class="btn btn-default dropdown-toggle btn-icon" ng-click="show()"aria-expanded="false"><i class="icon-menu7"></i></button>
+                                                  
+                                      </div>
+                                    </div>
+                                  
+                                  </div>
+                              </div>                                                    
+          
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Tanggal Pengiriman<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="date" placeholder="" ng-model="tgl" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Dikirim Via<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="pengiriman.kurir" name="via" required="required" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Berat Total <span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="pengiriman.berat" name="number"  required="required" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Harga/kg<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="pengiriman.harga_pengiriman"  name="harga" required="required" class="form-control">
+        
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-lg-4">Tracking Kode <span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                              <input type="text" placeholder="" ng-model="pengiriman.tracking_kode"   class="form-control">
+        
+                            </div>
+                          </div>
+
+
+                        </fieldset>
+
+                     </div>
+                        <div class="col-md-12">
+                            <div class="panel-footer"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                <div class="heading-elements">
+                                    
+                                    <div class="heading-btn pull-right">
+                                        <button type="submit" class="btn btn-info">Simpan </button>
+                                        <button ng-click="closeModal()" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+          <!-- /primary modal -->
+            <div id="modal_theme_order" class="modal fade" data-backdrop="false"  >
+                  <div id="mo" class="proceeds-modal" >
+
+                          <!-- Primary modal -->
+                    <div id="modal_theme_primary" >
+
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header bg-primary">
+                            <button type="button" class="close" ng-click="closeMo()">&times;</button>
+                            <h6 class="modal-title">Pilih Data Order</h6>
+
+                          </div>
+
+                          <div class="modal-body s">
+            <table class="table datatable-header-offset custom ">
+                <tr>
+                    <div class="navbar navbar-default navbar-xs navbar-component" style="margin-bottom:0px;">
+                      <ul class="nav navbar-nav no-border visible-xs-block">
+                        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                      </ul>
+
+                      <div class="navbar-collapse collapse" id="navbar-filter">
+                        <!-- <p class="navbar-text">Filter:</p> -->
+
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter" style="margin-top:3px; margin-bottom:0px; width:50%">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Filter By Keyword... {{data.keywordSearchO}}" ng-model="search" ng-change="searches()">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-default dropdown-toggle btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i> <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a ng-click="keywordSearchSet('orderNumber')">Nomor Order</a></li>
+                                <li><a ng-click="keywordSearchSet('orderName')">Nama Order</a></li>
+                              
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="navbar-right">
+                  
+                          <ul class="nav navbar-nav">
+                            <li class="{{asc}}"><a ng-click="sortClick('asc')" ng-model="asc"><i class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+                            <li class="{{desc}}"><a ng-click="sortClick('desc')" ng-model="desc"><i class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+                          </ul>
+                          <div class="nav navbar-nav" style="margin-top:3px;">
+                            <select ng-model='select.type' class="form-control" required ng-options='option.value as option.name for option in option' ng-click="rel()">
+                             </select>
+                          </div>
+
+                          
+                        </div>
+                      </div>
+                    </div>
+                </tr>
+              <thead>
+
+                <tr>
+
+                  <th>Tanggal</th>
+                  <th>Nomor Order</th>
+                  <th>Nama Order</th>
+                  <th>Customer</th>
+                  <th>Deadline</th>
+                  <th>Jumlah</th>
+
+                  <th>Status</th>
+                  <th>Aksi</th>
+
+                
+
+
+                </tr>
+              </thead>
+              <tbody ng-if="data.total_count_order<1">
+                <tr >
+                  <td colspan="5"><b>Tidak Ada Data</b></td> 
+                </tr>
+              </tbody>
+              <tbody dir-paginate="order in data.orders|itemsPerPage:data.itemsPerPage | filter:{orderStatus:'!Shipping'}|filter:{orderStatus:'!Not Confirmed'}|filter:{orderStatus:'!done'}" total-items="data.total_count_order">
+                  <tr>
+                    <td>{{order.orderDate }}</td>
+                    <td><span class="label bg-success">#{{order.orderNumber}}</span></td>
+                    <td>{{order.orderName}}
+                    <td><b>{{order.customerName | uppercase}}</b></td>
+                    <td><span class="label bg-danger">{{order.orderFinishDate}}</span></td>
+
+                    <td>{{order.jumlah | number}}</td>
+                    <td ng-if="order.orderStatus=='Not Confirmed'"><span class="label bg-danger">{{order.orderStatus}}</span>
+                    <td ng-if="order.orderStatus!='Not Confirmed'"><span class="label bg-info">{{order.orderStatus}}</span>
+                    </td>
+                    <td class="text-center">
+                         <button class="btn btn-default btn-xs" ng-click="pilihOrder(order.orderName,order.orderID)">Pilih</button>
+
+                    </td>
+                  </tr>
+
+
+  
+              </tbody>
+            </table>
+              <div class="datatable-footer" style="text-align:center"><dir-pagination-controls max-size="8" direction-links="true" boundary-links="true" on-page-change="data.getOrder(newPageNumber)"></dir-pagination-controls></div>
+
+
+
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-link"  ng-click="closeMo()" >Close</button>
+                        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /primary modal -->
+                  </div>
+         
+
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+        <!-- /content area -->
+    </div>
+
+        <!-- modal area-->
+
+        <!-- modal area-->
+
+
+
+
+
+
+
+
