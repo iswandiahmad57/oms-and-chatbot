@@ -12,8 +12,12 @@ Others.
 
 There are 3 parts of architecture in this system:
 
-1. The Backend (All the things that related to database happen here, This provide RESTFULL API to clients, so clients can consume this api)
+1. The Backend (All the things that related to database happen here, This provide RESTFULL API to clients, so clients can consume this api).
 2. The FrontEnd ( This is Order Management System User Interface, it is built with angular js 1.0 (I know this old :) and convert to desktop app with Electron
 3. The Webhook (This webhook server listen all trafic from chatbot during the conversation between client and chat app (messenger),
-   this webhook also connect with NLP Platform (API.AI)
+   this webhook also connect to NLP Platform (API.AI).
+   
+   
+  
+Keys: OMS, Chatbot, Backend (PHP,NodeJs), FrontEnd (Angular,css, html), Others (Socket.io, facebook API, NLP Platform).
    
